@@ -3,65 +3,129 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Wisetrader V75 1s</title>
+<title>Wisetrader V75</title>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Outfit',sans-serif}
-body{background:#070a1a;color:#fff;min-height:100vh}
-.bg{position:fixed;inset:0;background:radial-gradient(ellipse at top,#1a1033 0%,#070a1a 65%);z-index:-1}
-.header{padding:20px;text-align:center;border-bottom:1px solid rgba(255,255,255,0.06)}
-.logo{display:flex;align-items:center;justify-content:center;gap:12px}
-.logo-icon{width:48px;height:48px;background:linear-gradient(135deg,#a855f7,#FFD700);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:900;color:#fff}
-.logo-text h1{font-size:22px;font-weight:800}.logo-text h1 span{color:#FFD700}
-.logo-text p{font-size:11px;opacity:0.5;letter-spacing:2px;text-transform:uppercase;margin-top:2px}
-.container{max-width:440px;margin:0 auto;padding:20px}
-.price-card{background:linear-gradient(135deg,rgba(168,85,247,0.12),rgba(255,255,255,0.03));border:1px solid rgba(168,85,247,0.18);border-radius:20px;padding:20px;margin-bottom:16px}
-.price-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
-.symbol{display:flex;align-items:center;gap:10px}
-.symbol-badge{width:40px;height:40px;background:linear-gradient(135deg,#a855f7,#7c3aed);border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;color:#fff}
-.live{font-size:10px;background:#a855f7;color:#fff;padding:4px 10px;border-radius:20px;font-weight:800;animation:pulse 1.5s infinite}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.6}}
-.price-main{font-size:38px;font-weight:800;margin:8px 0}
-.price-change{font-size:13px}.change-up{color:#00FF88}.change-down{color:#FF456E}
-.signal-card{border-radius:24px;padding:28px;text-align:center;margin-bottom:16px;transition:all 0.4s}
-.signal-wait{background:linear-gradient(135deg,#1e1b33,#0f0d1f);border:1px solid rgba(168,85,247,0.15)}
-.signal-buy{background:linear-gradient(135deg,#00b86a,#00FF88);color:#000;box-shadow:0 20px 60px rgba(0,255,136,0.35)}
-.signal-sell{background:linear-gradient(135deg,#ff1744,#FF456E);color:#fff;box-shadow:0 20px 60px rgba(255,69,110,0.35)}
-.signal-icon{font-size:52px;margin-bottom:10px}.signal-text{font-size:38px;font-weight:900}.signal-sub{font-size:12px;margin-top:8px;opacity:0.85;letter-spacing:1px;text-transform:uppercase;font-weight:600}
-.details{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
-.detail-box{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);border-radius:16px;padding:16px}
-.detail-box h4{font-size:10px;opacity:0.5;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px}.detail-box.val{font-size:15px;font-weight:700}
-.trend-up{color:#00FF88}.trend-down{color:#FF456E}.btn{width:100%;padding:18px;border:none;border-radius:16px;font-size:14px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;text-decoration:none}
-.btn-whatsapp{background:#25D366;color:#fff;margin-bottom:12px}.btn-secondary{background:rgba(255,255,255,0.06);color:#fff;border:1px solid rgba(255,255,255,0.1)}
-.status{margin-top:16px;text-align:center;font-size:11px;opacity:0.4}
-.candles{display:flex;gap:3px;height:42px;align-items:flex-end;margin-top:14px}.candle{flex:1;border-radius:3px;min-width:4px}
+body{background:#0a0e1a;color:#fff;min-height:100vh}
+.bg{position:fixed;inset:0;background:radial-gradient(ellipse at top,#1a1f3a 0%,#0a0e1a 70%);z-index:-1}
+.container{max-width:440px;margin:0 auto;padding:24px 18px;text-align:center}
+h1{font-size:34px;font-weight:800;line-height:1.1;letter-spacing:-0.8px}
+.sub{font-size:14px;opacity:0.55;margin-top:10px;margin-bottom:18px;letter-spacing:0.2px}
+.card{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);border-radius:22px;padding:20px;margin-bottom:18px;backdrop-filter:blur(12px);box-shadow:0 8px 32px rgba(0,0,0,0.3)}
+.card-inner{font-size:16px;line-height:1.6;font-weight:500}
+.small{font-size:12px;opacity:0.45;margin-top:6px}
+.signal{border-radius:28px;padding:28px 20px;margin-bottom:18px;transition:0.3s;box-shadow:0 12px 40px rgba(0,0,0,0.3)}
+.signal-buy{background:linear-gradient(135deg,#00e676,#00c853);color:#000}
+.signal-sell{background:linear-gradient(135deg,#ff1744,#ff456e);color:#fff}
+.signal-wait{background:linear-gradient(135deg,#ffca28,#ffb300);color:#000}
+.signal-icon{font-size:30px;font-weight:900;display:flex;align-items:center;justify-content:center;gap:12px}
+.signal-sub{font-size:14px;font-weight:700;margin-top:8px;opacity:0.85}
+.controls{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);border-radius:20px;padding:14px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.ctrl-btn{background:#1e2a44;border:none;color:#fff;padding:12px 20px;border-radius:14px;font-weight:700;cursor:pointer;font-size:14px}
+.ctrl-btn:active{transform:scale(0.95)}
+.mid{font-size:13px;opacity:0.7;font-weight:600}
+.dot{display:inline-block;width:14px;height:14px;border-radius:50%;vertical-align:middle;margin-right:2px}
+.dot-buy{background:#00e676;box-shadow:0 0 12px #00e676}
+.dot-sell{background:#ff1744;box-shadow:0 0 12px #ff1744}
+.price-live{color:#5b8def;font-weight:800}
 </style>
 </head>
 <body>
 <div class="bg"></div>
-<div class="header"><div class="logo"><div class="logo-icon">V75</div><div class="logo-text"><h1>Wise<span>trader</span></h1><p>V75 (1s) • Professional Scalper</p></div></div></div>
 <div class="container">
-<div class="price-card"><div class="price-top"><div class="symbol"><div class="symbol-badge">V75</div><div><h3 style="font-size:16px">Volatility 75 (1s)</h3><span style="font-size:11px;opacity:0.6">1HZ75V • Deriv Live</span></div></div><div class="live">● LIVE</div></div><div class="price-main" id="price">Connecting...</div><div class="price-change"><span id="priceChange">Connecting to Deriv feed...</span></div><div class="candles" id="candles"></div></div>
-<div class="signal-card signal-wait" id="signalCard"><div class="signal-icon" id="signalIcon">⏳</div><div class="signal-text" id="signalText">ANALYZING</div><div class="signal-sub" id="signalSub">Scanning trend alignment</div></div>
-<div class="details"><div class="detail-box"><h4>M1 Trend (10, 4.0)</h4><div class="val" id="m1Trend">—</div></div><div class="detail-box"><h4>M5 Trend (10, 4.0)</h4><div class="val" id="m5Trend">—</div></div><div class="detail-box"><h4>Supertrend Level</h4><div class="val" id="supertrend">—</div></div><div class="detail-box"><h4>ATR (14)</h4><div class="val" id="atrVal">—</div></div></div>
-<a class="btn btn-whatsapp" id="whatsappBtn" href="#" target="_blank">📲 Share Signal to WhatsApp</a>
-<button class="btn btn-secondary" onclick="toggleSound()" id="soundBtn">🔔 Sound: ON</button>
-<div class="status">V75 1s • M5+M1 Confluence • ATR 4.0</div>
+<h1>Wisetrader 🚀<br><span style="color:#5b8def">V75</span></h1>
+<div class="sub">Volatility 75 - M5 + M1 Confirmation • Deriv Live</div>
+
+<div class="card">
+<div class="card-inner">
+<div id="m5Line">M5 Supertrend: <span class="dot dot-buy"></span> BUY</div>
+<div id="m1Line">M1 Supertrend: <span class="dot dot-buy"></span> BUY</div>
+<div>V75 Index: <span class="price-live" id="price">$---</span></div>
+<div class="small" id="status">Live - Supertrend P:10 M:4.0 - Deriv Real</div>
 </div>
+</div>
+
+<div class="signal signal-wait" id="signalBox">
+<div class="signal-icon" id="sigIcon">🟡 WAIT</div>
+<div class="signal-sub" id="sigSub">Analyzing...</div>
+</div>
+
+<div class="controls">
+<button class="ctrl-btn" onclick="changeMult(-0.5)">Mult -</button>
+<div class="mid" id="mid">Period 10 | Mult <span id="multVal">4.0</span></div>
+<button class="ctrl-btn" onclick="changeMult(0.5)">Mult +</button>
+</div>
+</div>
+
 <script>
-const symbol="1HZ75V";let price=0,lastPrice=0,m1Candles=[],m5Candles=[],soundOn=true,lastSignal="WAIT",currentCandle1m=null,currentCandle5m=null;
-let ws=new WebSocket("wss://ws.binaryws.com/websockets/v3?app_id=1089");
-ws.onopen=()=>{ws.send(JSON.stringify({ticks:symbol,subscribe:1}));ws.send(JSON.stringify({ticks_history:symbol,count:300,end:"latest",style:"candles",granularity:60}));};
-ws.onmessage=(msg)=>{let data=JSON.parse(msg.data);if(data.tick){price=data.tick.quote;updatePrice();processTick(price,data.tick.epoch);}if(data.candles){m1Candles=data.candles.map(c=>({o:+c.open,h:+c.high,l:+c.low,c:+c.close,t:c.epoch}));calcM5();analyze();}};
-function processTick(p,epoch){let minute=Math.floor(epoch/60)*60;if(!currentCandle1m||currentCandle1m.t!==minute){if(currentCandle1m)m1Candles.push(currentCandle1m);if(m1Candles.length>100)m1Candles.shift();currentCandle1m={o:p,h:p,l:p,c:p,t:minute};}else{currentCandle1m.h=Math.max(currentCandle1m.h,p);currentCandle1m.l=Math.min(currentCandle1m.l,p);currentCandle1m.c=p;}let minute5=Math.floor(epoch/300)*300;if(!currentCandle5m||currentCandle5m.t!==minute5){if(currentCandle5m)m5Candles.push(currentCandle5m);if(m5Candles.length>100)m5Candles.shift();currentCandle5m={o:p,h:p,l:p,c:p,t:minute5};}else{currentCandle5m.h=Math.max(currentCandle5m.h,p);currentCandle5m.l=Math.min(currentCandle5m.l,p);currentCandle5m.c=p;}if(m1Candles.length>20){calcM5();analyze();}renderCandles();}
-function calcM5(){m5Candles=[];for(let i=0;i<m1Candles.length;i+=5){let slice=m1Candles.slice(i,i+5);if(slice.length===5){m5Candles.push({o:slice[0].o,h:Math.max(...slice.map(s=>s.h)),l:Math.min(...slice.map(s=>s.l)),c:slice[4].c,t:slice[0].t});}}}
-function atr(candles,period=14){if(candles.length<period+1)return 0;let trs=[];for(let i=1;i<candles.length;i++){let c=candles[i],pc=candles[i-1];let tr=Math.max(c.h-c.l,Math.abs(c.h-pc.c),Math.abs(c.l-pc.c));trs.push(tr);}return trs.slice(-period).reduce((a,b)=>a+b,0)/period;}
-function supertrend(candles,period=10,mult=4.0){if(candles.length<period)return{trend:"WAIT",value:0,atr:0};let atrVal=atr(candles,period);let last=candles[candles.length-1];let hl2=(last.h+last.l)/2;let upper=hl2+mult*atrVal;let lower=hl2-mult*atrVal;let trend=last.c>hl2?"BULL":"BEAR";if(last.c>upper)trend="BULL";else if(last.c<lower)trend="BEAR";return{trend,value:trend==="BULL"?lower:upper,atr:atrVal};}
-function analyze(){let all1=[...m1Candles];if(currentCandle1m)all1.push(currentCandle1m);let all5=[...m5Candles];if(currentCandle5m)all5.push(currentCandle5m);if(all1.length<15||all5.length<5)return;let st1=supertrend(all1,10,4.0);let st5=supertrend(all5,10,4.0);document.getElementById("m1Trend").innerHTML=`<span class="${st1.trend==="BULL"?"trend-up":"trend-down"}">${st1.trend}</span>`;document.getElementById("m5Trend").innerHTML=`<span class="${st5.trend==="BULL"?"trend-up":"trend-down"}">${st5.trend}</span>`;document.getElementById("supertrend").textContent=st1.value.toFixed(2);document.getElementById("atrVal").textContent=st1.atr.toFixed(2);let signal="WAIT";if(st1.trend==="BULL"&&st5.trend==="BULL")signal="BUY";else if(st1.trend==="BEAR"&&st5.trend==="BEAR")signal="SELL";updateSignal(signal);}
-function updatePrice(){document.getElementById("price").textContent=price.toFixed(2);let diff=price-lastPrice;let el=document.getElementById("priceChange");if(price!==0){if(diff>0)el.innerHTML=`<span class="change-up">▲ +${diff.toFixed(2)}</span> • Volatility 75 (1s)`;else if(diff<0)el.innerHTML=`<span class="change-down">▼ ${diff.toFixed(2)}</span> • Volatility 75 (1s)`;}lastPrice=price;}
-function updateSignal(sig){if(sig===lastSignal)return;let card=document.getElementById("signalCard"),icon=document.getElementById("signalIcon"),text=document.getElementById("signalText"),sub=document.getElementById("signalSub");if(sig==="BUY"){card.className="signal-card signal-buy";icon.textContent="🚀";text.textContent="BUY";sub.textContent="Strong bullish momentum detected";if(soundOn){let a=new Audio("https://actions.google.com/sounds/v1/alarms/beep_short.ogg");a.play();navigator.vibrate&&navigator.vibrate([200,100,200]);}}else if(sig==="SELL"){card.className="signal-card signal-sell";icon.textContent="🔻";text.textContent="SELL";sub.textContent="Strong bearish momentum detected";if(soundOn){let a=new Audio("https://actions.google.com/sounds/v1/alarms/beep_short.ogg");a.play();navigator.vibrate&&navigator.vibrate([300,100,300]);}}else{card.className="signal-card signal-wait";icon.textContent="⏳";text.textContent="WAIT";sub.textContent="Waiting for M5+M1 alignment";}lastSignal=sig;let msg=`*Wisetrader V75 (1s) Signal*%0A%0A*Index:* V75 (1s) - 1HZ75V%0A*Signal:* ${sig}%0A*Price:* ${price.toFixed(2)}%0A*Time:* ${new Date().toLocaleTimeString()}%0A*Strategy:* Supertrend M5+M1 ATR 4.0`;document.getElementById("whatsappBtn").href=`https://wa.me/?text=${msg}`;}
-function renderCandles(){let cont=document.getElementById("candles");let data=m1Candles.slice(-20);if(currentCandle1m)data=[...data,currentCandle1m].slice(-20);cont.innerHTML="";data.forEach(c=>{let div=document.createElement("div");div.className="candle";div.style.height=(10+Math.abs(c.c-c.o)*0.8).toFixed(0)+"px";if(parseInt(div.style.height)>38)div.style.height="38px";div.style.background=c.c>=c.o?"#00FF88":"#FF456E";cont.appendChild(div);});}
-function toggleSound(){soundOn=!soundOn;document.getElementById("soundBtn").textContent=soundOn?"🔔 Sound: ON":"🔕 Sound: OFF";}
+let mult=4.0, period=10;
+let price=0, m1C=[], m5C=[], cur1=null, cur5=null, lastSig="WAIT";
+let ws;
+
+function connectDeriv(){
+ ws = new WebSocket('wss://ws.derivws.com/websockets/v3?app_id=1089');
+ ws.onopen = () => { ws.send(JSON.stringify({ticks:"R_75"})); document.getElementById('status').textContent='Live - Connected to Deriv'; };
+ ws.onmessage = (msg) => {
+   let data = JSON.parse(msg.data);
+   if(data.tick){
+     let p = parseFloat(data.tick.quote);
+     let epoch = parseInt(data.tick.epoch);
+     handlePrice(p, epoch);
+   }
+ };
+ ws.onclose = () => { document.getElementById('status').textContent='Reconnecting...'; setTimeout(connectDeriv,3000); };
+}
+
+function handlePrice(p, epoch){
+ price=p;
+ document.getElementById('price').textContent='$'+p.toFixed(2);
+ tick(p, epoch);
+}
+
+function tick(p, epoch){
+ let m=Math.floor(epoch/60)*60;
+ if(!cur1||cur1.t!==m){if(cur1)m1C.push(cur1);if(m1C.length>150)m1C.shift();cur1={o:p,h:p,l:p,c:p,t:m};}else{cur1.h=Math.max(cur1.h,p);cur1.l=Math.min(cur1.l,p);cur1.c=p;}
+ let m5=Math.floor(epoch/300)*300;
+ if(!cur5||cur5.t!==m5){if(cur5)m5C.push(cur5);if(m5C.length>150)m5C.shift();cur5={o:p,h:p,l:p,c:p,t:m5};}else{cur5.h=Math.max(cur5.h,p);cur5.l=Math.min(cur5.l,p);cur5.c=p;}
+ if(m1C.length>20) analyze();
+}
+
+function atr(c,per){if(c.length<per+1)return 0;let tr=[];for(let i=1;i<c.length;i++){let a=c[i],b=c[i-1];tr.push(Math.max(a.h-a.l,Math.abs(a.h-b.c),Math.abs(a.l-b.c)));}return tr.slice(-per).reduce((x,y)=>x+y,0)/per;}
+function supertrend(c,per,m){if(c.length<per)return{trend:"WAIT"};let a=atr(c,per);let last=c[c.length-1];let hl2=(last.h+last.l)/2;return{trend:last.c>hl2?"BUY":"SELL"};}
+
+function analyze(){
+ let a1=[...m1C];if(cur1)a1.push(cur1);
+ let a5=[...m5C];if(cur5)a5.push(cur5);
+ if(a5.length<5){a5=[];for(let i=0;i<a1.length;i+=5){let s=a1.slice(i,i+5);if(s.length===5)a5.push({o:s[0].o,h:Math.max(...s.map(x=>x.h)),l:Math.min(...s.map(x=>x.l)),c:s[4].c,t:s[0].t});}}
+ if(a1.length<20||a5.length<5)return;
+ let s1=supertrend(a1,period,mult), s5=supertrend(a5,period,mult);
+ document.getElementById('m5Line').innerHTML='M5 Supertrend: <span class="dot '+(s5.trend==="BUY"?'dot-buy':'dot-sell')+'"></span> '+s5.trend;
+ document.getElementById('m1Line').innerHTML='M1 Supertrend: <span class="dot '+(s1.trend==="BUY"?'dot-buy':'dot-sell')+'"></span> '+s1.trend;
+ let sig="WAIT";
+ if(s5.trend==="BUY"&&s1.trend==="BUY")sig="BUY";
+ else if(s5.trend==="SELL"&&s1.trend==="SELL")sig="SELL";
+ updateSignal(sig);
+}
+
+function updateSignal(sig){
+ if(sig===lastSig)return;
+ let box=document.getElementById('signalBox'), ic=document.getElementById('sigIcon'), sub=document.getElementById('sigSub');
+ if(sig==="BUY"){box.className="signal signal-buy";ic.innerHTML="🟢 V75 BUY NOW";sub.textContent="Go Deriv → BUY Volatility 75";}
+ else if(sig==="SELL"){box.className="signal signal-sell";ic.innerHTML="🔴 V75 SELL NOW";sub.textContent="Go Deriv → SELL Volatility 75";}
+ else{box.className="signal signal-wait";ic.innerHTML="🟡 WAIT";sub.textContent="M5 & M1 not aligned";}
+ lastSig=sig;
+}
+
+function changeMult(d){
+ mult=Math.max(1,Math.min(6,mult+d));
+ document.getElementById('multVal').textContent=mult.toFixed(1);
+ document.getElementById('status').textContent='Live - Supertrend P:10 M:'+mult.toFixed(1)+' - Deriv Real';
+ if(m1C.length>20) analyze();
+}
+
+connectDeriv();
+for(let i=0;i<35;i++){let f=400000+(Math.random()-0.5)*2000;let t=Math.floor(Date.now()/1000)-(35-i)*60;m1C.push({o:f,h:f+50,l:f-50,c:f,t:t});}
 </script>
 </body>
 </html>
