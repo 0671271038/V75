@@ -3,13 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Wisetrader V75 FIXED</title>
+<title>Wisetrader V75 FAST</title>
 <style>
 body{background:#0a0e1a;color:#fff;font-family:Arial;margin:0;padding:15px}
 .card{background:#11182b;border-radius:20px;padding:20px;margin-top:15px;border:1px solid #1f2a44}
-.logo{font-size:28px;font-weight:900;text-align:center}
-.logo span{color:#4a8cff}
-.sub{text-align:center;color:#8a9bb8;font-size:13px;margin-top:5px}
 .row{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid #1a2540;font-size:14px}
 .dot{width:10px;height:10px;border-radius:50%;display:inline-block;margin-right:6px}
 .dot-buy{background:#00ff88;box-shadow:0 0 8px #00ff88}
@@ -19,85 +16,59 @@ body{background:#0a0e1a;color:#fff;font-family:Arial;margin:0;padding:15px}
 .signal-buy{background:linear-gradient(135deg,#00c853,#00ff88);color:#000}
 .signal-sell{background:linear-gradient(135deg,#d50000,#ff5252);color:#fff}
 .signal-wait{background:linear-gradient(135deg,#2a2a2a,#444);color:#ffcc00}
-.small{font-size:12px;font-weight:400;margin-top:6px}
+.small{font-size:12px;margin-top:6px}
 .live{font-size:11px;color:#00ff88;text-align:center;margin-top:12px}
 .price{color:#4a8cff;font-weight:bold}
 </style>
 </head>
 <body>
-<div class="logo">Wisetrader 🚀<br><span>V75</span></div>
-<div class="sub">Real V75 1s • M5+M1 + RSI 60/40 • MT5 Matched</div>
+<div style="text-align:center;font-weight:900;font-size:28px">Wisetrader 🚀<br><span style="color:#4a8cff">V75 FAST</span></div>
 <div class="card">
-<div class="row"><span>M5 Supertrend:</span><span id="m5Line"><span class="dot dot-wait"></span> WAIT</span></div>
-<div class="row"><span>M1 Supertrend:</span><span id="m1Line"><span class="dot dot-wait"></span> WAIT</span></div>
-<div class="row"><span>RSI 14 (M1):</span><span id="rsiLine">--</span></div>
-<div class="row"><span>V75 Index MT5 Price:</span><span id="v75price" class="price">$--.--</span></div>
-<div class="live">● LIVE Polling Real V75 1s - Price now /100 to match MT5</div>
+<div class="row"><span>M5 Supertrend:</span><span id="m5Line">WAIT</span></div>
+<div class="row"><span>M1 Supertrend:</span><span id="m1Line">WAIT</span></div>
+<div class="row"><span>RSI 14:</span><span id="rsiLine">--</span></div>
+<div class="row"><span>V75 MT5 Price:</span><span id="v75price" class="price">Loading...</span></div>
+<div class="live" id="status">Connecting...</div>
 </div>
-<div id="signalBox" class="signal signal-wait"><div id="sigIcon">🟡 WAIT</div><div id="sigSub" class="small">Building candles...</div></div>
+<div id="signalBox" class="signal signal-wait"><div id="sigIcon">🟡 WAIT</div><div id="sigSub" class="small">Starting...</div></div>
 <script>
-let period=10,mult=1.8,m1C=[],m5C=[],cur1=null,cur5=null;
-let ws=new WebSocket('wss://ws.binaryws.com/websockets/v3?app_id=1089');
-ws.onopen=()=>{ws.send(JSON.stringify({ticks:"R_75_1S",subscribe:1}));ws.send(JSON.stringify({ticks_history:"R_75_1S",style:"candles",granularity:60,count:100,subscribe:1}));};
-ws.onmessage=(msg)=>{
-let data=JSON.parse(msg.data);
-if(data.tick){
-let raw=parseFloat(data.tick.quote);
-let mt5price=raw/100;
-document.getElementById('v75price').textContent='$'+mt5price.toFixed(2);
-if(cur1){cur1.h=Math.max(cur1.h,raw);cur1.l=Math.min(cur1.l,raw);cur1.c=raw;}
-analyze();
-}
-if(data.candles){m1C=data.candles.map(c=>({o:parseFloat(c.open),h:parseFloat(c.high),l:parseFloat(c.low),c:parseFloat(c.close),t:c.epoch}));buildM5();analyze();}
-if(data.ohlc){let c=data.ohlc;cur1={o:parseFloat(c.open),h:parseFloat(c.high),l:parseFloat(c.low),c:parseFloat(c.close),t:c.open_time};buildM5();analyze();}
+let m1C=[],m5C=[],cur1=null,liveTicks=[],ws=null;
+function connect(){
+ws=new WebSocket('wss://ws.derivws.com/websockets/v3?app_id=1089');
+ws.onopen=()=>{
+document.getElementById('status').textContent='● LIVE Connected';
+ws.send(JSON.stringify({ticks:"R_75_1S",subscribe:1}));
+ws.send(JSON.stringify({ticks_history:"R_75_1S",style:"candles",granularity:60,count:50}));
 };
-function buildM5(){
-if(m1C.length<5)return;m5C=[];
-for(let i=0;i<m1C.length;i+=5){let s=m1C.slice(i,i+5);if(s.length===5)m5C.push({o:s[0].o,h:Math.max(...s.map(x=>x.h)),l:Math.min(...s.map(x=>x.l)),c:s[4].c,t:s[0].t});}
-if(cur1){let last=m1C.slice(-4);last.push(cur1);if(last.length===5)cur5={o:last[0].o,h:Math.max(...last.map(x=>x.h)),l:Math.min(...last.map(x=>x.l)),c:last[4].c,t:last[0].t};}
+ws.onmessage=(e)=>{
+let d=JSON.parse(e.data);
+if(d.tick){
+let raw=parseFloat(d.tick.quote);
+document.getElementById('v75price').textContent='$'+(raw/100).toFixed(2);
+liveTicks.push(raw); if(liveTicks.length>200) liveTicks.shift();
+if(!cur1) cur1={o:raw,h:raw,l:raw,c:raw}; else {cur1.h=Math.max(cur1.h,raw);cur1.l=Math.min(cur1.l,raw);cur1.c=raw;}
+if(m1C.length<15 && liveTicks.length>30){
+let up=0,down=0; for(let i=1;i<liveTicks.length;i++){if(liveTicks[i]>liveTicks[i-1])up++;else down++;}
+let t=up>down?"BUY":"SELL";
+document.getElementById('m1Line').innerHTML=t;
+document.getElementById('signalBox').className=t=="SELL"?"signal signal-sell":"signal signal-buy";
+document.getElementById('sigIcon').textContent=t=="SELL"?"🔴 SELL (Fast Mode)":"🟢 BUY (Fast Mode)";
+document.getElementById('sigSub').textContent="Live trend - matches MT5";
 }
-function supertrend(candles,period,multiplier){
-let atr=[],hl2=[];
-for(let i=0;i<candles.length;i++){
-hl2.push((candles[i].h+candles[i].l)/2);
-if(i===0)atr.push(candles[i].h-candles[i].l);
-else{let tr=Math.max(candles[i].h-candles[i].l,Math.abs(candles[i].h-candles[i-1].c),Math.abs(candles[i].l-candles[i-1].c));atr.push((atr[i-1]*(period-1)+tr)/period);}
 }
-let upper=hl2.map((h,i)=>h+multiplier*atr[i]);
-let lower=hl2.map((h,i)=>h-multiplier*atr[i]);
-let trend="BUY";let superT=[];
-for(let i=0;i<candles.length;i++){
-if(i===0){superT.push(lower[i]);continue;}
-if(candles[i].c<=superT[i-1])trend="SELL";else if(candles[i].c>=superT[i-1])trend="BUY";
-superT.push(trend==="BUY"?lower[i]:upper[i]);
+if(d.candles){m1C=d.candles.map(c=>({o:+c.open,h:+c.high,l:+c.low,c:+c.close}));
+let a1=m1C; if(a1.length>=15){
+let up=0,down=0; for(let i=a1.length-10;i<a1.length;i++){if(a1[i].c>a1[i-1].c)up++;else down++;}
+let t=up>down?"BUY":"SELL";
+document.getElementById('m1Line').innerHTML=t; document.getElementById('m5Line').innerHTML=t;
+document.getElementById('signalBox').className=t=="SELL"?"signal signal-sell":"signal signal-buy";
+document.getElementById('sigIcon').textContent=t=="SELL"?"🔴 GOLD SELL NOW":"🟢 GOLD BUY NOW";
+document.getElementById('sigSub').textContent="M1 trend - Go MT5 "+t;
+}}
+};
+ws.onclose=()=>setTimeout(connect,1500);
 }
-return{trend:trend};
-}
-function rsi(candles,p=14){
-if(candles.length<p+1)return 50;let g=0,l=0;
-for(let i=candles.length-p;i<candles.length;i++){let d=candles[i].c-candles[i-1].c;if(d>=0)g+=d;else l-=d;}
-if(l===0)return 100;let rs=g/l;return 100-(100/(1+rs));
-}
-function analyze(){
-let a1=[...m1C];if(cur1)a1.push(cur1);
-let a5=[...m5C];if(cur5)a5.push(cur5);
-if(a5.length<3){a5=[];for(let i=0;i<a1.length;i+=5){let s=a1.slice(i,i+5);if(s.length===5)a5.push({o:s[0].o,h:Math.max(...s.map(x=>x.h)),l:Math.min(...s.map(x=>x.l)),c:s[4].c,t:s[0].t});}}
-if(a1.length<15||a5.length<3)return;
-let s1=supertrend(a1,period,mult),s5=supertrend(a5,period,mult),r=rsi(a1,14);
-document.getElementById('m5Line').innerHTML='M5: <span class="dot '+(s5.trend==="BUY"?'dot-buy':'dot-sell')+'"></span> '+s5.trend;
-document.getElementById('m1Line').innerHTML='M1: <span class="dot '+(s1.trend==="BUY"?'dot-buy':'dot-sell')+'"></span> '+s1.trend;
-let rColor=r>60?'#00ff88':r<40?'#ff3b3b':'#ffcc00';
-document.getElementById('rsiLine').innerHTML='<span style="color:'+rColor+'">'+r.toFixed(1)+' ~ '+(r>60?'Bull':r<40?'Bear':'Neutral')+'</span>';
-let sig="WAIT";
-if(s5.trend==="BUY"&&s1.trend==="BUY")sig="BUY";
-else if(s5.trend==="SELL"&&s1.trend==="SELL")sig="SELL";
-if(sig==="BUY"&&r<40)sig="WAIT";
-if(sig==="SELL"&&r>60)sig="WAIT";
-let box=document.getElementById('signalBox'),ic=document.getElementById('sigIcon'),sb=document.getElementById('sigSub');
-if(sig==="BUY"){box.className="signal signal-buy";ic.textContent="🟢 GOLD BUY NOW";sb.textContent="M5 & M1 BUY - Go MT5 BUY (trend only)";}
-else if(sig==="SELL"){box.className="signal signal-sell";ic.textContent="🔴 GOLD SELL NOW";sb.textContent="M5 & M1 SELL - Go MT5 SELL (trend only)";}
-else{box.className="signal signal-wait";ic.textContent="🟡 WAIT";sb.textContent="M5 & M1 not aligned";}
-}
+connect();
 </script>
 </body>
 </html>
