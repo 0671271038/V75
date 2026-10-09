@@ -3,135 +3,1420 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Wisetrader V75 PRO HTTP</title>
+<meta name="theme-color" content="#080d19">
+
+<title>Wisetrader V75 PRO</title>
+
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{background:#070a14;color:#e8eefc;font-family:Arial;padding:16px}
-.header{text-align:center;padding:18px 0 10px}
-.header h1{font-size:32px;font-weight:900}
-.header h1 span{color:#3d7cff}
-.header p{color:#7a8bb0;font-size:13px;margin-top:6px}
-.card{background:linear-gradient(180deg,#121a2f 0%,#0e1529 100%);border:1px solid #1c2947;border-radius:22px;padding:20px 18px;margin-top:16px}
-.row{display:flex;justify-content:space-between;align-items:center;padding:13px 0;border-bottom:1px solid #1a2642;font-size:14px}
-.row:last-child{border:0}
-.label{color:#8a9dc2}
-.val{font-weight:700;display:flex;align-items:center}
-.dot{width:10px;height:10px;border-radius:50%;margin-right:8px}
-.dot-buy{background:#00e676;box-shadow:0 0 10px rgba(0,230,118,0.6)}
-.dot-sell{background:#ff3d57;box-shadow:0 0 10px rgba(255,61,87,0.6)}
-.dot-wait{background:#ffca28;box-shadow:0 0 10px rgba(255,202,40,0.6)}
-.price{color:#5b8cff;font-size:15px}
-.live{margin-top:14px;text-align:center;font-size:11px;padding:8px;border-radius:10px;background:#0a1226;border:1px solid #1a2a4a}
-.signal{margin-top:18px;border-radius:20px;padding:24px;text-align:center}
-.signal-buy{background:linear-gradient(135deg,#00c853 0%,#00e676 100%);color:#000}
-.signal-sell{background:linear-gradient(135deg,#c62828 0%,#ff3d57 100%);color:#fff}
-.signal-wait{background:linear-gradient(135deg,#1a233e 0%,#222e4e 100%);color:#ffca28;border:1px solid #2a3a5e}
-.sig-main{font-size:26px;font-weight:900}
-.sig-sub{font-size:12px;margin-top:6px;opacity:0.9}
+:root {
+  --bg: #080d19;
+  --panel: #10192b;
+  --panel2: #0c1424;
+  --border: #22304a;
+  --text: #edf3ff;
+  --muted: #8d9db8;
+  --blue: #6295ff;
+  --green: #20df9a;
+  --red: #ff5b70;
+  --yellow: #ffcc66;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background:
+    radial-gradient(ellipse at top, #132344 0%, var(--bg) 55%);
+  color: var(--text);
+  font-family: Inter, Arial, sans-serif;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+button, select {
+  font: inherit;
+}
+
+.container {
+  width: 100%;
+  max-width: 1180px;
+  margin: auto;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+  margin-bottom: 25px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo {
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  border-radius: 15px;
+  color: white;
+  font-weight: 900;
+  font-size: 21px;
+  background: linear-gradient(135deg, #4078ff, #24b8db);
+  box-shadow: 0 8px 28px #316bff35;
+}
+
+h1 {
+  font-size: 25px;
+  letter-spacing: -0.8px;
+}
+
+h1 span {
+  color: var(--blue);
+}
+
+.subtitle {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 5px;
+}
+
+.connection {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 11px 14px;
+  border: 1px solid var(--border);
+  background: #0d1728;
+  border-radius: 12px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.status-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--yellow);
+  flex-shrink: 0;
+}
+
+.status-dot.connected {
+  background: var(--green);
+  box-shadow: 0 0 10px #20df9a75;
+}
+
+.status-dot.disconnected {
+  background: var(--red);
+}
+
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+
+.instrument {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.instrument strong {
+  font-size: 16px;
+}
+
+.instrument small {
+  display: block;
+  color: var(--muted);
+  font-size: 11px;
+  margin-top: 4px;
+}
+
+select {
+  color: var(--text);
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 11px;
+  outline: none;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.card {
+  background: linear-gradient(155deg, #131f35, #0d1526);
+  border: 1px solid var(--border);
+  border-radius: 17px;
+  padding: 18px;
+  min-width: 0;
+  box-shadow: 0 10px 35px #00000012;
+}
+
+.metric-label {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.metric-value {
+  font-size: 25px;
+  font-weight: 800;
+  margin-top: 13px;
+  overflow-wrap: anywhere;
+}
+
+.metric-note {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 9px;
+}
+
+.green {
+  color: var(--green);
+}
+
+.red {
+  color: var(--red);
+}
+
+.yellow {
+  color: var(--yellow);
+}
+
+.blue {
+  color: var(--blue);
+}
+
+.section {
+  margin-top: 18px;
+}
+
+.section-title {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.trend-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.trend-card {
+  padding: 20px;
+}
+
+.trend-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.trend-top h3 {
+  font-size: 15px;
+}
+
+.badge {
+  border-radius: 7px;
+  padding: 6px 9px;
+  font-size: 10px;
+  font-weight: 800;
+  background: #263149;
+  color: var(--muted);
+}
+
+.badge.buy {
+  color: var(--green);
+  background: #12372f;
+}
+
+.badge.sell {
+  color: var(--red);
+  background: #411c2a;
+}
+
+.badge.wait {
+  color: var(--yellow);
+  background: #3c3120;
+}
+
+.trend-value {
+  font-size: 27px;
+  font-weight: 900;
+  margin-top: 19px;
+}
+
+.trend-description {
+  color: var(--muted);
+  font-size: 12px;
+  margin-top: 8px;
+  line-height: 1.6;
+}
+
+.rsi-track {
+  width: 100%;
+  height: 7px;
+  background: #263149;
+  border-radius: 10px;
+  margin-top: 17px;
+  overflow: hidden;
+}
+
+.rsi-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--blue);
+  border-radius: 10px;
+  transition: width 0.3s ease;
+}
+
+.signal-card {
+  text-align: center;
+  padding: 29px 18px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: linear-gradient(145deg, #131e34, #0c1425);
+}
+
+.signal-symbol {
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.signal-title {
+  font-size: 35px;
+  font-weight: 950;
+  margin-top: 13px;
+  letter-spacing: -1px;
+}
+
+.signal-card.buy {
+  border-color: #20df9a65;
+  background: linear-gradient(145deg, #10352e, #0c1924);
+}
+
+.signal-card.sell {
+  border-color: #ff5b7065;
+  background: linear-gradient(145deg, #3b1928, #151321);
+}
+
+.signal-card.wait {
+  border-color: #ffcc6640;
+}
+
+.signal-description {
+  color: #c1cde2;
+  font-size: 13px;
+  line-height: 1.7;
+  margin: 10px auto 0;
+  max-width: 600px;
+}
+
+.signal-details {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.signal-chip {
+  background: #ffffff0a;
+  border: 1px solid #ffffff12;
+  padding: 8px 11px;
+  border-radius: 9px;
+  font-size: 11px;
+  color: #d5e1f5;
+}
+
+.history {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+.history th {
+  color: var(--muted);
+  font-weight: 600;
+  text-align: left;
+}
+
+.history th,
+.history td {
+  padding: 13px 9px;
+  border-bottom: 1px solid #ffffff0c;
+}
+
+.history td {
+  color: #dce6f8;
+}
+
+.history-wrap {
+  overflow-x: auto;
+}
+
+.empty {
+  color: var(--muted);
+  text-align: center;
+  padding: 22px 5px !important;
+}
+
+.note {
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.8;
+  margin-top: 12px;
+}
+
+.footer {
+  text-align: center;
+  color: #72819b;
+  font-size: 11px;
+  padding: 25px 0 10px;
+}
+
+@media (max-width: 800px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 520px) {
+  body {
+    padding: 13px;
+  }
+
+  h1 {
+    font-size: 21px;
+  }
+
+  .grid {
+    gap: 10px;
+  }
+
+  .card {
+    padding: 15px;
+    border-radius: 14px;
+  }
+
+  .trend-grid {
+    gap: 10px;
+  }
+
+  .trend-value {
+    font-size: 23px;
+  }
+
+  .signal-title {
+    font-size: 30px;
+  }
+
+  .metric-value {
+    font-size: 22px;
+  }
+}
 </style>
 </head>
+
 <body>
-<div class="header">
-<h1>Wisetrader <span>V75</span> 🚀</h1>
-<p>REAL V75 (1s) • HTTP MODE • MT5 MATCHED</p>
+<div class="container">
+
+<header>
+  <div class="brand">
+    <div class="logo">W</div>
+    <div>
+      <h1>Wise<span>trader</span> V75</h1>
+      <div class="subtitle">PRO SIGNAL TERMINAL · SUPERTREND + RSI</div>
+    </div>
+  </div>
+
+  <div class="connection">
+    <span id="connectionDot" class="status-dot"></span>
+    <span id="connectionText">CONNECTING TO DERIV</span>
+  </div>
+</header>
+
+<div class="toolbar">
+  <div class="instrument">
+    <div>
+      <strong id="instrumentName">Volatility 75 Index</strong>
+      <small>Market data · Closed-candle analysis</small>
+    </div>
+  </div>
+
+  <select id="symbolSelect" aria-label="Select market">
+    <option value="R_75_1S">Volatility 75 (1s)</option>
+    <option value="R_75">Volatility 75 Index</option>
+  </select>
 </div>
-<div class="card">
-<div class="row"><span class="label">M5 Supertrend</span><span class="val" id="m5"><span class="dot dot-wait"></span>WAIT</span></div>
-<div class="row"><span class="label">M1 Supertrend</span><span class="val" id="m1"><span class="dot dot-wait"></span>WAIT</span></div>
-<div class="row"><span class="label">RSI 14 (M1)</span><span class="val" id="rsi">--</span></div>
-<div class="row"><span class="label">V75 MT5 Price</span><span class="val price" id="price">Loading via HTTP...</span></div>
-<div class="live" id="status">● HTTP MODE ACTIVE</div>
+
+<div class="grid">
+  <div class="card">
+    <div class="metric-label">LIVE MARKET PRICE</div>
+    <div id="price" class="metric-value blue">--</div>
+    <div class="metric-note" id="priceTime">Waiting for market data</div>
+  </div>
+
+  <div class="card">
+    <div class="metric-label">M5 RSI (14)</div>
+    <div id="rsi5" class="metric-value">--</div>
+    <div class="metric-note" id="rsi5Note">Waiting for candles</div>
+  </div>
+
+  <div class="card">
+    <div class="metric-label">M1 RSI (14)</div>
+    <div id="rsi1" class="metric-value">--</div>
+    <div class="metric-note" id="rsi1Note">Waiting for candles</div>
+  </div>
+
+  <div class="card">
+    <div class="metric-label">LAST CONFIRMED SIGNAL</div>
+    <div id="lastSignal" class="metric-value yellow">WAIT</div>
+    <div class="metric-note" id="lastSignalTime">No confirmed signal yet</div>
+  </div>
 </div>
-<div id="box" class="signal signal-wait">
-<div id="icon" class="sig-main">🟡 WAIT</div>
-<div id="sub" class="sig-sub">Loading...</div>
+
+<div class="section">
+  <div class="section-title">TREND CONFIRMATION</div>
+
+  <div class="trend-grid">
+    <div class="card trend-card">
+      <div class="trend-top">
+        <h3>M5 Supertrend</h3>
+        <span id="m5Badge" class="badge wait">WAITING</span>
+      </div>
+      <div id="m5Trend" class="trend-value yellow">WAIT</div>
+      <div id="m5Description" class="trend-description">
+        Waiting for enough completed M5 candles.
+      </div>
+    </div>
+
+    <div class="card trend-card">
+      <div class="trend-top">
+        <h3>M1 Supertrend</h3>
+        <span id="m1Badge" class="badge wait">WAITING</span>
+      </div>
+      <div id="m1Trend" class="trend-value yellow">WAIT</div>
+      <div id="m1Description" class="trend-description">
+        Waiting for enough completed M1 candles.
+      </div>
+    </div>
+  </div>
 </div>
+
+<div class="section">
+  <div class="section-title">TRADE DECISION</div>
+
+  <div id="signalCard" class="signal-card wait">
+    <div class="signal-symbol">WISETRADER CONFIRMATION ENGINE</div>
+    <div id="signalTitle" class="signal-title yellow">WAIT</div>
+    <div id="signalDescription" class="signal-description">
+      Waiting for market data and indicator confirmation.
+    </div>
+
+    <div class="signal-details">
+      <span id="chipM5" class="signal-chip">M5: WAIT</span>
+      <span id="chipM1" class="signal-chip">M1: WAIT</span>
+      <span id="chipRsi5" class="signal-chip">M5 RSI: --</span>
+      <span id="chipRsi1" class="signal-chip">M1 RSI: --</span>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="card">
+    <div class="section-title">SIGNAL HISTORY</div>
+
+    <div class="history-wrap">
+      <table class="history">
+        <thead>
+          <tr>
+            <th>TIME</th>
+            <th>SIGNAL</th>
+            <th>M5 TREND</th>
+            <th>M1 TREND</th>
+            <th>M5 RSI</th>
+            <th>M1 RSI</th>
+          </tr>
+        </thead>
+
+        <tbody id="historyBody">
+          <tr>
+            <td colspan="6" class="empty">
+              No confirmed signals recorded.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="note">
+      Signal history records changes in the confirmed decision.
+      A signal is not proof of a profitable trade.
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="card">
+    <div class="section-title">SYSTEM INFORMATION</div>
+
+    <div class="note">
+      Strategy: Supertrend (10, 1.8) + RSI (14).<br>
+      BUY: M5 and M1 Supertrend bullish, with both RSI values ≥ 60.<br>
+      SELL: M5 and M1 Supertrend bearish, with both RSI values ≤ 40.<br>
+      WAIT: Any required condition is missing or fails confirmation.<br>
+      Candle confirmation: Completed candles only.<br>
+      Execution: Signals only. No automatic orders are placed.<br>
+      Risk notice: Volatility 75 is a high-risk synthetic index.
+      Backtest and demo-test this strategy before considering live trading.
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  WISETRADER V75 PRO · MARKET ANALYSIS TERMINAL
+</div>
+
+</div>
+
 <script>
-let m1C=[], ticks=[];
-const P=10, M=1.8;
-function dot(t){return `<span class="dot dot-${t}"></span>`;}
-function setStatus(t,c){const e=document.getElementById('status');e.textContent='● '+t;e.style.color=c||'#00e676';}
-async function apiCall(payload){
- try{
-  let res = await fetch('https://api.deriv.com/api/v3?app_id=1089', {
-   method:'POST',
-   headers:{'Content-Type':'application/json'},
-   body: JSON.stringify(payload)
-  });
-  if(res.ok) return await res.json();
- }catch(e){} return null;
-}
-async function fetchCandles(){
- setStatus('FETCHING M1 CANDLES...','#ffca28');
- let data = await apiCall({ticks_history:'R_75_1S', style:'candles', granularity:60, count:60, end:'latest'});
- if(data && data.candles){
-  m1C = data.candles.map(c=>({o:+c.open,h:+c.high,l:+c.low,c:+c.close}));
-  setStatus('LIVE HTTP - '+m1C.length+' CANDLES','#00e676');
-  analyze();
- }
-}
-async function fetchTick(){
- let data = await apiCall({ticks:'R_75_1S'});
- if(data && data.tick){
-  let raw=parseFloat(data.tick.quote);
-  document.getElementById('price').textContent='$'+(raw/100).toFixed(2)+' (MT5)';
-  ticks.push(raw); if(ticks.length>200)ticks.shift();
-  if(m1C.length>0){
-   let cur=m1C[m1C.length-1]; cur.c=raw; cur.h=Math.max(cur.h,raw); cur.l=Math.min(cur.l,raw);
-   analyze();
-  } else if(ticks.length>20){
-   let up=0,down=0; for(let i=1;i<ticks.length;i++) if(ticks[i]>ticks[i-1])up++;else down++;
-   let tr=up>=down?'BUY':'SELL';
-   document.getElementById('m1').innerHTML=dot(tr.toLowerCase())+tr+' (LIVE)';
-   const box=document.getElementById('box'),ic=document.getElementById('icon'),su=document.getElementById('sub');
-   if(tr==='BUY'){box.className='signal signal-buy';ic.textContent='🟢 BUY NOW';su.textContent='LIVE UPTREND - BUY ON MT5';}
-   else{box.className='signal signal-sell';ic.textContent='🔴 SELL NOW';su.textContent='LIVE DOWNTREND - SELL ON MT5';}
+"use strict";
+
+/*
+ * WISETRADER V75 PRO
+ * Market data: Deriv public WebSocket API
+ * Signals only. This file does not place trades.
+ */
+
+const CONFIG = {
+  appId: 1089,
+  defaultSymbol: "R_75_1S",
+  atrPeriod: 10,
+  atrMultiplier: 1.8,
+  rsiPeriod: 14,
+  rsiBuy: 60,
+  rsiSell: 40,
+  candleCount: 300,
+  staleAfterMs: 30000
+};
+
+let ws = null;
+let requestId = 0;
+let reconnectTimer = null;
+let heartbeatTimer = null;
+let marketTimer = null;
+let lastMessageAt = 0;
+let connected = false;
+let activeSymbol = CONFIG.defaultSymbol;
+
+let candlesM1 = [];
+let candlesM5 = [];
+let lastPrice = null;
+let lastCandleTime = null;
+let lastDecisionKey = "";
+let historyItems = [];
+let latestAnalysis = null;
+
+const pending = new Map();
+
+const $ = id => document.getElementById(id);
+
+function send(payload) {
+  if (!ws || ws.readyState !== WebSocket.OPEN) {
+    return null;
   }
- }
+
+  const id = ++requestId;
+  payload.req_id = id;
+
+  ws.send(JSON.stringify(payload));
+  return id;
 }
-function supertrend(cs,p,m){
- let atr=[],hl2=[];
- for(let i=0;i<cs.length;i++){
-  hl2.push((cs[i].h+cs[i].l)/2);
-  if(i===0)atr.push(cs[i].h-cs[i].l);
-  else{let tr=Math.max(cs[i].h-cs[i].l,Math.abs(cs[i].h-cs[i-1].c),Math.abs(cs[i].l-cs[i-1].c));atr.push((atr[i-1]*(p-1)+tr)/p);}
- }
- let up=hl2.map((h,i)=>h+m*atr[i]), low=hl2.map((h,i)=>h-m*atr[i]);
- let trend='BUY', st=[];
- for(let i=0;i<cs.length;i++){
-  if(i===0){st.push(low[i]);continue;}
-  if(cs[i].c<=st[i-1])trend='SELL'; else if(cs[i].c>=st[i-1])trend='BUY';
-  st.push(trend==='BUY'?low[i]:up[i]);
- } return {trend};
+
+function setConnection(label, state) {
+  $("connectionText").textContent = label;
+  $("connectionDot").className =
+    "status-dot " + (state || "");
 }
-function rsi(cs,p=14){
- if(cs.length<p+1)return 50;let g=0,l=0;
- for(let i=cs.length-p;i<cs.length;i++){let d=cs[i].c-cs[i-1].c; if(d>=0)g+=d;else l-=d;}
- if(l===0)return 80; return 100-(100/(1+g/l));
+
+function formatPrice(value) {
+  if (!Number.isFinite(value)) return "--";
+
+  return value.toLocaleString("en-US", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 6
+  });
 }
-function analyze(){
- if(m1C.length<20)return;
- let a1=[...m1C];
- let a5=[]; for(let i=0;i<a1.length;i+=5){let s=a1.slice(i,i+5); if(s.length===5)a5.push({o:s[0].o,h:Math.max(...s.map(x=>x.h)),l:Math.min(...s.map(x=>x.l)),c:s[4].c});}
- if(a5.length<4)return;
- let s1=supertrend(a1,P,M), s5=supertrend(a5,P,M), r=rsi(a1,14);
- document.getElementById('m5').innerHTML=dot(s5.trend.toLowerCase())+s5.trend;
- document.getElementById('m1').innerHTML=dot(s1.trend.toLowerCase())+s1.trend;
- document.getElementById('rsi').innerHTML=r.toFixed(1);
- let sig='WAIT';
- if(s5.trend==='BUY'&&s1.trend==='BUY')sig='BUY';
- else if(s5.trend==='SELL'&&s1.trend==='SELL')sig='SELL';
- if(sig==='BUY'&&r<38)sig='WAIT';
- if(sig==='SELL'&&r>62)sig='WAIT';
- const box=document.getElementById('box'),ic=document.getElementById('icon'),su=document.getElementById('sub');
- if(sig==='BUY'){box.className='signal signal-buy';ic.textContent='🟢 GOLD BUY NOW';su.textContent='M5 & M1 BUY - EXECUTE ON MT5';}
- else if(sig==='SELL'){box.className='signal signal-sell';ic.textContent='🔴 GOLD SELL NOW';su.textContent='M5 & M1 SELL - EXECUTE ON MT5';}
- else{box.className='signal signal-wait';ic.textContent='🟡 WAIT';su.textContent='NOT ALIGNED - HOLD';}
+
+function formatTime(timestamp) {
+  return new Date(timestamp * 1000).toLocaleTimeString(
+    "en-ZA",
+    {
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit"
+    }
+  );
 }
-fetchCandles();
-fetchTick();
-setInterval(fetchTick, 1500);
-setInterval(fetchCandles, 15000);
+
+function normalizeCandle(c) {
+  return {
+    time: Number(c.epoch),
+    o: Number(c.open),
+    h: Number(c.high),
+    l: Number(c.low),
+    c: Number(c.close)
+  };
+}
+
+function validCandle(c) {
+  return c &&
+    Number.isFinite(c.time) &&
+    Number.isFinite(c.o) &&
+    Number.isFinite(c.h) &&
+    Number.isFinite(c.l) &&
+    Number.isFinite(c.c) &&
+    c.h >= c.l;
+}
+
+function upsertCandle(list, candle) {
+  if (!validCandle(candle)) return;
+
+  const index = list.findIndex(
+    x => x.time === candle.time
+  );
+
+  if (index >= 0) {
+    list[index] = candle;
+  } else {
+    list.push(candle);
+  }
+
+  list.sort((a, b) => a.time - b.time);
+
+  if (list.length > CONFIG.candleCount + 5) {
+    list.splice(0, list.length - CONFIG.candleCount - 5);
+  }
+}
+
+/*
+ * Aggregate M1 candles using real UTC epoch boundaries.
+ * Five consecutive M1 candles must be present.
+ * Only completed M5 candles are returned for analysis.
+ */
+function aggregateM5(m1) {
+  const groups = new Map();
+
+  for (const candle of m1) {
+    const bucket = Math.floor(candle.time / 300) * 300;
+
+    if (!groups.has(bucket)) {
+      groups.set(bucket, []);
+    }
+
+    groups.get(bucket).push(candle);
+  }
+
+  const output = [];
+
+  for (const [time, group] of groups) {
+    group.sort((a, b) => a.time - b.time);
+
+    if (group.length !== 5) continue;
+
+    let contiguous = true;
+
+    for (let i = 1; i < group.length; i++) {
+      if (group[i].time - group[i - 1].time !== 60) {
+        contiguous = false;
+        break;
+      }
+    }
+
+    if (!contiguous) continue;
+
+    output.push({
+      time,
+      o: group[0].o,
+      h: Math.max(...group.map(x => x.h)),
+      l: Math.min(...group.map(x => x.l)),
+      c: group[4].c
+    });
+  }
+
+  return output.sort((a, b) => a.time - b.time);
+}
+
+/*
+ * Wilder RSI, using average gains and losses.
+ */
+function calculateRSI(candles, period = 14) {
+  if (candles.length < period + 1) {
+    return null;
+  }
+
+  const changes = [];
+
+  for (let i = 1; i < candles.length; i++) {
+    changes.push(candles[i].c - candles[i - 1].c);
+  }
+
+  let gains = 0;
+  let losses = 0;
+
+  for (let i = 0; i < period; i++) {
+    const change = changes[i];
+
+    if (change > 0) gains += change;
+    if (change < 0) losses -= change;
+  }
+
+  let avgGain = gains / period;
+  let avgLoss = losses / period;
+
+  for (let i = period; i < changes.length; i++) {
+    const change = changes[i];
+
+    const gain = Math.max(change, 0);
+    const loss = Math.max(-change, 0);
+
+    avgGain =
+      (avgGain * (period - 1) + gain) / period;
+
+    avgLoss =
+      (avgLoss * (period - 1) + loss) / period;
+  }
+
+  if (avgGain === 0 && avgLoss === 0) return 50;
+  if (avgLoss === 0) return 100;
+  if (avgGain === 0) return 0;
+
+  const rs = avgGain / avgLoss;
+
+  return 100 - 100 / (1 + rs);
+}
+
+/*
+ * Wilder ATR and final Supertrend bands.
+ * Returns the direction of the most recent candle.
+ */
+function calculateSupertrend(
+  candles,
+  period = 10,
+  multiplier = 1.8
+) {
+  if (candles.length < period + 2) {
+    return null;
+  }
+
+  const n = candles.length;
+  const tr = new Array(n).fill(null);
+  const atr = new Array(n).fill(null);
+  const finalUpper = new Array(n).fill(null);
+  const finalLower = new Array(n).fill(null);
+  const trend = new Array(n).fill(null);
+  const st = new Array(n).fill(null);
+
+  for (let i = 1; i < n; i++) {
+    tr[i] = Math.max(
+      candles[i].h - candles[i].l,
+      Math.abs(candles[i].h - candles[i - 1].c),
+      Math.abs(candles[i].l - candles[i - 1].c)
+    );
+  }
+
+  const firstAtrIndex = period;
+
+  let initialSum = 0;
+
+  for (let i = 1; i <= period; i++) {
+    initialSum += tr[i];
+  }
+
+  atr[firstAtrIndex] = initialSum / period;
+
+  for (let i = firstAtrIndex + 1; i < n; i++) {
+    atr[i] =
+      (atr[i - 1] * (period - 1) + tr[i]) / period;
+  }
+
+  for (let i = firstAtrIndex; i < n; i++) {
+    const mid = (candles[i].h + candles[i].l) / 2;
+
+    const basicUpper = mid + multiplier * atr[i];
+    const basicLower = mid - multiplier * atr[i];
+
+    if (i === firstAtrIndex) {
+      finalUpper[i] = basicUpper;
+      finalLower[i] = basicLower;
+      trend[i] = candles[i].c >= mid ? 1 : -1;
+    } else {
+      finalUpper[i] =
+        basicUpper < finalUpper[i - 1] ||
+        candles[i - 1].c > finalUpper[i - 1]
+          ? basicUpper
+          : finalUpper[i - 1];
+
+      finalLower[i] =
+        basicLower > finalLower[i - 1] ||
+        candles[i - 1].c < finalLower[i - 1]
+          ? basicLower
+          : finalLower[i - 1];
+
+      if (trend[i - 1] === -1) {
+        trend[i] =
+          candles[i].c > finalUpper[i]
+            ? 1
+            : -1;
+      } else {
+        trend[i] =
+          candles[i].c < finalLower[i]
+            ? -1
+            : 1;
+      }
+    }
+
+    st[i] = trend[i] === 1
+      ? finalLower[i]
+      : finalUpper[i];
+  }
+
+  const last = n - 1;
+
+  if (trend[last] === null || atr[last] === null) {
+    return null;
+  }
+
+  return {
+    direction: trend[last] === 1 ? "BUY" : "SELL",
+    value: st[last],
+    atr: atr[last]
+  };
+}
+
+function trendClass(direction) {
+  if (direction === "BUY") return "green";
+  if (direction === "SELL") return "red";
+  return "yellow";
+}
+
+function updateTrendPanel(
+  prefix,
+  supertrend,
+  rsi,
+  timeframe
+) {
+  const direction = supertrend
+    ? supertrend.direction
+    : "WAIT";
+
+  const badge = $(prefix + "Badge");
+  const trend = $(prefix + "Trend");
+  const description = $(prefix + "Description");
+
+  badge.className =
+    "badge " +
+    (direction === "BUY"
+      ? "buy"
+      : direction === "SELL"
+      ? "sell"
+      : "wait");
+
+  badge.textContent =
+    direction === "WAIT" ? "WAITING" : "CONFIRMED";
+
+  trend.textContent = direction;
+  trend.className =
+    "trend-value " + trendClass(direction);
+
+  if (!supertrend) {
+    description.textContent =
+      "Not enough valid completed " +
+      timeframe +
+      " candles to calculate Supertrend.";
+  } else {
+    description.textContent =
+      "Supertrend direction: " +
+      direction +
+      ". RSI: " +
+      (rsi === null ? "--" : rsi.toFixed(2)) +
+      ". Calculated from completed candles.";
+  }
+}
+
+function updateRSIPanel(id, noteId, value) {
+  const el = $(id);
+  const note = $(noteId);
+
+  if (value === null) {
+    el.textContent = "--";
+    el.className = "metric-value yellow";
+    note.textContent = "Waiting for enough candles";
+    return;
+  }
+
+  el.textContent = value.toFixed(2);
+
+  if (value >= CONFIG.rsiBuy) {
+    el.className = "metric-value green";
+    note.textContent = "BUY threshold reached";
+  } else if (value <= CONFIG.rsiSell) {
+    el.className = "metric-value red";
+    note.textContent = "SELL threshold reached";
+  } else {
+    el.className = "metric-value yellow";
+    note.textContent = "Inside neutral RSI zone";
+  }
+}
+
+function determineSignal(st5, st1, rsi5, rsi1) {
+  if (!st5 || !st1 || rsi5 === null || rsi1 === null) {
+    return {
+      signal: "WAIT",
+      reason: "Waiting for sufficient valid candle history."
+    };
+  }
+
+  if (
+    st5.direction === "BUY" &&
+    st1.direction === "BUY" &&
+    rsi5 >= CONFIG.rsiBuy &&
+    rsi1 >= CONFIG.rsiBuy
+  ) {
+    return {
+      signal: "BUY",
+      reason:
+        "Both Supertrends are bullish and both RSI values are at least 60."
+    };
+  }
+
+  if (
+    st5.direction === "SELL" &&
+    st1.direction === "SELL" &&
+    rsi5 <= CONFIG.rsiSell &&
+    rsi1 <= CONFIG.rsiSell
+  ) {
+    return {
+      signal: "SELL",
+      reason:
+        "Both Supertrends are bearish and both RSI values are at most 40."
+    };
+  }
+
+  const reasons = [];
+
+  if (st5.direction !== st1.direction) {
+    reasons.push("M5 and M1 trends disagree");
+  }
+
+  if (st5.direction === "BUY" && st1.direction === "BUY") {
+    if (rsi5 < CONFIG.rsiBuy) reasons.push("M5 RSI below 60");
+    if (rsi1 < CONFIG.rsiBuy) reasons.push("M1 RSI below 60");
+  }
+
+  if (st5.direction === "SELL" && st1.direction === "SELL") {
+    if (rsi5 > CONFIG.rsiSell) reasons.push("M5 RSI above 40");
+    if (rsi1 > CONFIG.rsiSell) reasons.push("M1 RSI above 40");
+  }
+
+  return {
+    signal: "WAIT",
+    reason: reasons.length
+      ? reasons.join("; ") + "."
+      : "The complete entry conditions are not satisfied."
+  };
+}
+
+function recordSignal(analysis) {
+  const key = [
+    analysis.signal,
+    analysis.st5.direction,
+    analysis.st1.direction,
+    analysis.rsi5.toFixed(2),
+    analysis.rsi1.toFixed(2),
+    analysis.candleTime
+  ].join("|");
+
+  if (key === lastDecisionKey) return;
+
+  lastDecisionKey = key;
+
+  if (analysis.signal === "WAIT") return;
+
+  const item = {
+    time: Date.now(),
+    signal: analysis.signal,
+    m5: analysis.st5.direction,
+    m1: analysis.st1.direction,
+    rsi5: analysis.rsi5,
+    rsi1: analysis.rsi1
+  };
+
+  historyItems.unshift(item);
+  historyItems = historyItems.slice(0, 50);
+
+  renderHistory();
+}
+
+function renderHistory() {
+  const body = $("historyBody");
+
+  if (!historyItems.length) {
+    body.innerHTML =
+      '<tr><td colspan="6" class="empty">' +
+      "No confirmed signals recorded." +
+      "</td></tr>";
+    return;
+  }
+
+  body.innerHTML = historyItems.map(item => {
+    const signalClass =
+      item.signal === "BUY" ? "green" : "red";
+
+    return `
+      <tr>
+        <td>${new Date(item.time).toLocaleTimeString("en-ZA")}</td>
+        <td class="${signalClass}">${item.signal}</td>
+        <td>${item.m5}</td>
+        <td>${item.m1}</td>
+        <td>${item.rsi5.toFixed(2)}</td>
+        <td>${item.rsi1.toFixed(2)}</td>
+      </tr>
+    `;
+  }).join("");
+}
+
+function renderAnalysis() {
+  const now = Date.now();
+
+  if (
+    !connected ||
+    !lastMessageAt ||
+    now - lastMessageAt > CONFIG.staleAfterMs
+  ) {
+    showWait("Market data is disconnected or stale. No new signal is permitted.");
+    return;
+  }
+
+  const completedM1 = candlesM1.filter(
+    c => c.time + 60 <= Math.floor(now / 1000)
+  );
+
+  const completedM5 = aggregateM5(completedM1).filter(
+    c => c.time + 300 <= Math.floor(now / 1000)
+  );
+
+  if (
+    completedM1.length < CONFIG.rsiPeriod + 2 ||
+    completedM5.length < CONFIG.rsiPeriod + CONFIG.atrPeriod + 2
+  ) {
+    showWait("Collecting enough completed M1 and M5 candles. Please wait.");
+    return;
+  }
+
+  const st1 = calculateSupertrend(
+    completedM1,
+    CONFIG.atrPeriod,
+    CONFIG.atrMultiplier
+  );
+
+  const st5 = calculateSupertrend(
+    completedM5,
+    CONFIG.atrPeriod,
+    CONFIG.atrMultiplier
+  );
+
+  const rsi1 = calculateRSI(
+    completedM1,
+    CONFIG.rsiPeriod
+  );
+
+  const rsi5 = calculateRSI(
+    completedM5,
+    CONFIG.rsiPeriod
+  );
+
+  updateTrendPanel("m1", st1, rsi1, "M1");
+  updateTrendPanel("m5", st5, rsi5, "M5");
+
+  updateRSIPanel("rsi1", "rsi1Note", rsi1);
+  updateRSIPanel("rsi5", "rsi5Note", rsi5);
+
+  if (!st1 || !st5 || rsi1 === null || rsi5 === null) {
+    showWait("Waiting for valid indicator calculations.");
+    return;
+  }
+
+  const result = determineSignal(st5, st1, rsi5, rsi1);
+
+  const analysis = {
+    ...result,
+    st5,
+    st1,
+    rsi5,
+    rsi1,
+    candleTime: completedM1[completedM1.length - 1].time
+  };
+
+  latestAnalysis = analysis;
+
+  $("chipM5").textContent = "M5: " + st5.direction;
+  $("chipM1").textContent = "M1: " + st1.direction;
+  $("chipRsi5").textContent = "M5 RSI: " + rsi5.toFixed(2);
+  $("chipRsi1").textContent = "M1 RSI: " + rsi1.toFixed(2);
+
+  const card = $("signalCard");
+  const title = $("signalTitle");
+
+  card.className = "signal-card " + result.signal.toLowerCase();
+  title.className =
+    "signal-title " + trendClass(result.signal);
+
+  title.textContent = result.signal;
+  $("signalDescription").textContent = result.reason;
+
+  recordSignal(analysis);
+
+  if (result.signal !== "WAIT") {
+    $("lastSignal").textContent = result.signal;
+    $("lastSignal").className =
+      "metric-value " + trendClass(result.signal);
+
+    $("lastSignalTime").textContent =
+      "Confirmed at " +
+      new Date().toLocaleTimeString("en-ZA");
+  }
+}
+
+function showWait(reason) {
+  $("signalCard").className = "signal-card wait";
+  $("signalTitle").textContent = "WAIT";
+  $("signalTitle").className = "signal-title yellow";
+  $("signalDescription").textContent = reason;
+
+  $("chipM5").textContent = "M5: WAIT";
+  $("chipM1").textContent = "M1: WAIT";
+  $("chipRsi5").textContent = "M5 RSI: --";
+  $("chipRsi1").textContent = "M1 RSI: --";
+}
+
+function subscribeToMarket() {
+  candlesM1 = [];
+  candlesM5 = [];
+  lastPrice = null;
+  lastCandleTime = null;
+  latestAnalysis = null;
+  lastDecisionKey = "";
+
+  $("price").textContent = "--";
+  $("rsi1").textContent = "--";
+  $("rsi5").textContent = "--";
+
+  $("m1Trend").textContent = "WAIT";
+  $("m5Trend").textContent = "WAIT";
+
+  $("lastSignal").textContent = "WAIT";
+  $("lastSignal").className = "metric-value yellow";
+  $("lastSignalTime").textContent = "Waiting for a new signal";
+
+  showWait("Downloading candle history from Deriv.");
+
+  send({
+    ticks_history: activeSymbol,
+    style: "candles",
+    granularity: 60,
+    count: CONFIG.candleCount,
+    end: "latest"
+  });
+
+  send({
+    ticks: activeSymbol,
+    subscribe: 1
+  });
+}
+
+function connect() {
+  clearTimeout(reconnectTimer);
+  clearInterval(heartbeatTimer);
+
+  connected = false;
+  setConnection("CONNECTING TO DERIV", "");
+
+  try {
+    ws = new WebSocket(
+      "wss://ws.derivws.com/websockets/v3?app_id=" +
+      CONFIG.appId
+    );
+  } catch (error) {
+    setConnection("CONNECTION ERROR", "disconnected");
+    scheduleReconnect();
+    return;
+  }
+
+  ws.onopen = () => {
+    connected = true;
+    lastMessageAt = Date.now();
+
+    setConnection("CONNECTED", "connected");
+
+    subscribeToMarket();
+
+    heartbeatTimer = setInterval(() => {
+      if (ws && ws.readyState === WebSocket.OPEN) {
+        send({ ping: 1 });
+      }
+    }, 25000);
+  };
+
+  ws.onmessage = event => {
+    let data;
+
+    try {
+      data = JSON.parse(event.data);
+    } catch {
+      return;
+    }
+
+    lastMessageAt = Date.now();
+
+    if (data.error) {
+      console.error("Deriv API error:", data.error.message);
+
+      setConnection(
+        "API ERROR: " + data.error.message,
+        "disconnected"
+      );
+
+      showWait("Deriv returned an API error. Check the connection and symbol.");
+
+      return;
+    }
+
+    if (data.history && Array.isArray(data.history.candles)) {
+      for (const raw of data.history.candles) {
+        const candle = normalizeCandle(raw);
+        upsertCandle(candlesM1, candle);
+      }
+
+      renderAnalysis();
+      return;
+    }
+
+    if (data.candles && Array.isArray(data.candles)) {
+      for (const raw of data.candles) {
+        const candle = normalizeCandle(raw);
+        upsertCandle(candlesM1, candle);
+      }
+
+      renderAnalysis();
+      return;
+    }
+
+    if (data.tick) {
+      lastPrice = Number(data.tick.quote);
+
+      $("price").textContent = formatPrice(lastPrice);
+      $("priceTime").textContent =
+        "Last tick: " + formatTime(Number(data.tick.epoch));
+
+      /*
+       * Do not alter historical candles with individual ticks.
+       * The dashboard analyzes completed M1/M5 candles only.
+       */
+      return;
+    }
+
+    if (data.ping) {
+      return;
+    }
+  };
+
+  ws.onerror = () => {
+    setConnection("CONNECTION ERROR", "disconnected");
+  };
+
+  ws.onclose = () => {
+    connected = false;
+
+    clearInterval(heartbeatTimer);
+
+    setConnection("DISCONNECTED", "disconnected");
+    showWait("Connection lost. Waiting to reconnect.");
+    scheduleReconnect();
+  };
+}
+
+function scheduleReconnect() {
+  clearTimeout(reconnectTimer);
+
+  reconnectTimer = setTimeout(() => {
+    connect();
+  }, 4000);
+}
+
+$("symbolSelect").addEventListener("change", event => {
+  activeSymbol = event.target.value;
+
+  $("instrumentName").textContent =
+    activeSymbol === "R_75_1S"
+      ? "Volatility 75 Index (1s)"
+      : "Volatility 75 Index";
+
+  historyItems = [];
+  renderHistory();
+
+  if (ws) {
+    ws.onclose = null;
+    ws.onerror = null;
+
+    try {
+      ws.close();
+    } catch {}
+  }
+
+  clearInterval(heartbeatTimer);
+  connect();
+});
+
+marketTimer = setInterval(() => {
+  if (!connected) return;
+
+  /*
+   * Request an updated M1 candle history.
+   * This also allows the browser to recover from missed updates.
+   */
+  send({
+    ticks_history: activeSymbol,
+    style: "candles",
+    granularity: 60,
+    count: CONFIG.candleCount,
+    end: "latest"
+  });
+
+  renderAnalysis();
+}, 15000);
+
+connect();
 </script>
 </body>
-</html>
+         </html>
