@@ -1,94 +1,103 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Wisetrader V75</title>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wisetrader V75 FIXED</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Outfit',sans-serif}
-body{background:#0a0e1a;color:#fff;min-height:100vh}
-.bg{position:fixed;inset:0;background:radial-gradient(ellipse at top,#1a1f3a 0%,#0a0e1a 70%);z-index:-1}
-.container{max-width:440px;margin:0 auto;padding:22px 18px;text-align:center}
-h1{font-size:34px;font-weight:800;line-height:1.1}
-.sub{font-size:13px;opacity:0.55;margin:10px 0 18px}
-.card{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);border-radius:22px;padding:18px;margin-bottom:16px}
-.card-inner{font-size:15px;line-height:1.8;font-weight:500;text-align:left}
-.row{display:flex;justify-content:space-between}
-.small{font-size:11px;opacity:0.45;margin-top:8px;text-align:center}
-.signal{border-radius:28px;padding:26px 20px;margin-bottom:16px;box-shadow:0 12px 40px rgba(0,0,0,0.3)}
-.signal-buy{background:linear-gradient(135deg,#00e676,#00c853);color:#000}
-.signal-sell{background:linear-gradient(135deg,#ff1744,#ff456e);color:#fff}
-.signal-wait{background:linear-gradient(135deg,#ffca28,#ffb300);color:#000}
-.signal-icon{font-size:26px;font-weight:900}.signal-sub{font-size:13px;font-weight:700;margin-top:6px}
-.controls{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);border-radius:20px;padding:14px;display:flex;justify-content:space-between;align-items:center}
-.ctrl-btn{background:#1e2a44;border:none;color:#fff;padding:12px 20px;border-radius:14px;font-weight:700;cursor:pointer}
-.mid{font-size:13px;opacity:0.7;font-weight:600}
-.dot{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:4px}
-.dot-buy{background:#00e676;box-shadow:0 0 10px #00e676}.dot-sell{background:#ff1744;box-shadow:0 0 10px #ff1744}
-.price-live{color:#5b8def;font-weight:800}.rsi-high{color:#00e676}.rsi-low{color:#ff456e}.rsi-mid{color:#ffca28}
+body{background:#0a0e1a;color:#fff;font-family:Arial;margin:0;padding:15px}
+.card{background:#11182b;border-radius:20px;padding:20px;margin-top:15px;border:1px solid #1f2a44}
+.logo{font-size:28px;font-weight:900;text-align:center}
+.logo span{color:#4a8cff}
+.sub{text-align:center;color:#8a9bb8;font-size:13px;margin-top:5px}
+.row{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid #1a2540;font-size:14px}
+.dot{width:10px;height:10px;border-radius:50%;display:inline-block;margin-right:6px}
+.dot-buy{background:#00ff88;box-shadow:0 0 8px #00ff88}
+.dot-sell{background:#ff3b3b;box-shadow:0 0 8px #ff3b3b}
+.dot-wait{background:#ffcc00;box-shadow:0 0 8px #ffcc00}
+.signal{border-radius:18px;padding:22px;text-align:center;margin-top:18px;font-weight:900;font-size:22px}
+.signal-buy{background:linear-gradient(135deg,#00c853,#00ff88);color:#000}
+.signal-sell{background:linear-gradient(135deg,#d50000,#ff5252);color:#fff}
+.signal-wait{background:linear-gradient(135deg,#2a2a2a,#444);color:#ffcc00}
+.small{font-size:12px;font-weight:400;margin-top:6px}
+.live{font-size:11px;color:#00ff88;text-align:center;margin-top:12px}
+.price{color:#4a8cff;font-weight:bold}
 </style>
 </head>
 <body>
-<div class="bg"></div>
-<div class="container">
-<h1>Wisetrader 🚀<br><span style="color:#5b8def">V75</span></h1>
-<div class="sub">Real V75 • M5+M1 + RSI 60/40 Smooth</div>
-<div class="card"><div class="card-inner">
-<div class="row"><span>M5 Supertrend:</span><span id="m5">—</span></div>
-<div class="row"><span>M1 Supertrend:</span><span id="m1">—</span></div>
-<div class="row"><span>RSI 14 (M1):</span><span id="rsi">—</span></div>
-<div class="row"><span>V75 Index:</span><span class="price-live" id="price">Loading...</span></div>
-<div class="small" id="status">Connecting to Deriv...</div>
-</div></div>
-<div class="signal signal-wait" id="sigBox"><div class="signal-icon" id="sigIcon">🟡 WAIT</div><div class="signal-sub" id="sigSub">Waiting for confirmation...</div></div>
-<div class="controls"><button class="ctrl-btn" onclick="chg(-0.5)">Mult -</button><div class="mid">P10 | Mult <span id="mult">4.0</span></div><button class="ctrl-btn" onclick="chg(0.5)">Mult +</button></div>
+<div class="logo">Wisetrader 🚀<br><span>V75</span></div>
+<div class="sub">Real V75 1s • M5+M1 + RSI 60/40 • MT5 Matched</div>
+<div class="card">
+<div class="row"><span>M5 Supertrend:</span><span id="m5Line"><span class="dot dot-wait"></span> WAIT</span></div>
+<div class="row"><span>M1 Supertrend:</span><span id="m1Line"><span class="dot dot-wait"></span> WAIT</span></div>
+<div class="row"><span>RSI 14 (M1):</span><span id="rsiLine">--</span></div>
+<div class="row"><span>V75 Index MT5 Price:</span><span id="v75price" class="price">$--.--</span></div>
+<div class="live">● LIVE Polling Real V75 1s - Price now /100 to match MT5</div>
 </div>
+<div id="signalBox" class="signal signal-wait"><div id="sigIcon">🟡 WAIT</div><div id="sigSub" class="small">Building candles...</div></div>
 <script>
-let mult=4.0,per=10,m1C=[],m5C=[],cur1=null,cur5=null,price=0,ws,retry=0;
-function setStatus(t){document.getElementById('status').textContent=t;}
-function handleTick(p,epoch,src){price=p;document.getElementById('price').textContent='$'+p.toFixed(2);setStatus('● LIVE '+src+' $'+p.toFixed(2));tick(p,epoch);}
-function connectWS(){
- try{
-  ws=new WebSocket('wss://ws.derivws.com/websockets/v3?app_id=1089');
-  ws.onopen=()=>{ws.send(JSON.stringify({ticks:"R_75",subscribe:1}));setStatus('● LIVE Deriv Real');retry=0;};
-  ws.onmessage=(e)=>{let d=JSON.parse(e.data);if(d.tick)handleTick(parseFloat(d.tick.quote),parseInt(d.tick.epoch),'Deriv Real');};
-  ws.onerror=()=>{poll();};ws.onclose=()=>{retry++;if(retry<5)setTimeout(connectWS,2000);else poll();};
- }catch(e){poll();}
+let period=10,mult=1.8,m1C=[],m5C=[],cur1=null,cur5=null;
+let ws=new WebSocket('wss://ws.binaryws.com/websockets/v3?app_id=1089');
+ws.onopen=()=>{ws.send(JSON.stringify({ticks:"R_75_1S",subscribe:1}));ws.send(JSON.stringify({ticks_history:"R_75_1S",style:"candles",granularity:60,count:100,subscribe:1}));};
+ws.onmessage=(msg)=>{
+let data=JSON.parse(msg.data);
+if(data.tick){
+let raw=parseFloat(data.tick.quote);
+let mt5price=raw/100;
+document.getElementById('v75price').textContent='$'+mt5price.toFixed(2);
+if(cur1){cur1.h=Math.max(cur1.h,raw);cur1.l=Math.min(cur1.l,raw);cur1.c=raw;}
+analyze();
 }
-function poll(){
- setStatus('● LIVE Polling Real V75');
- let base=price||470000;
- setInterval(()=>{base+=(Math.random()-0.49)*6;document.getElementById('price').textContent='$'+base.toFixed(2);tick(base,Math.floor(Date.now()/1000));},1500);
- setTimeout(connectWS,10000);
+if(data.candles){m1C=data.candles.map(c=>({o:parseFloat(c.open),h:parseFloat(c.high),l:parseFloat(c.low),c:parseFloat(c.close),t:c.epoch}));buildM5();analyze();}
+if(data.ohlc){let c=data.ohlc;cur1={o:parseFloat(c.open),h:parseFloat(c.high),l:parseFloat(c.low),c:parseFloat(c.close),t:c.open_time};buildM5();analyze();}
+};
+function buildM5(){
+if(m1C.length<5)return;m5C=[];
+for(let i=0;i<m1C.length;i+=5){let s=m1C.slice(i,i+5);if(s.length===5)m5C.push({o:s[0].o,h:Math.max(...s.map(x=>x.h)),l:Math.min(...s.map(x=>x.l)),c:s[4].c,t:s[0].t});}
+if(cur1){let last=m1C.slice(-4);last.push(cur1);if(last.length===5)cur5={o:last[0].o,h:Math.max(...last.map(x=>x.h)),l:Math.min(...last.map(x=>x.l)),c:last[4].c,t:last[0].t};}
 }
-function tick(p,epoch){let m=Math.floor(epoch/60)*60;if(!cur1||cur1.t!==m){if(cur1)m1C.push(cur1);if(m1C.length>150)m1C.shift();cur1={o:p,h:p,l:p,c:p,t:m};}else{cur1.h=Math.max(cur1.h,p);cur1.l=Math.min(cur1.l,p);cur1.c=p;}let m5=Math.floor(epoch/300)*300;if(!cur5||cur5.t!==m5){if(cur5)m5C.push(cur5);if(m5C.length>150)m5C.shift();cur5={o:p,h:p,l:p,c:p,t:m5};}else{cur5.h=Math.max(cur5.h,p);cur5.l=Math.min(cur5.l,p);cur5.c=p;}if(m1C.length>20)analyze();}
-function st(c){if(c.length<10)return{trend:"WAIT"};let last=c[c.length-1];return{trend:last.c>(last.h+last.l)/2?"BUY":"SELL"};}
-function rsi(c,per=14){if(c.length<per+1)return 50;let g=0,l=0;for(let i=c.length-per;i<c.length;i++){let d=c[i].c-c[i-1].c;if(d>=0)g+=d;else l-=d;}if(l===0)return 100;return 100-(100/(1+g/l));}
+function supertrend(candles,period,multiplier){
+let atr=[],hl2=[];
+for(let i=0;i<candles.length;i++){
+hl2.push((candles[i].h+candles[i].l)/2);
+if(i===0)atr.push(candles[i].h-candles[i].l);
+else{let tr=Math.max(candles[i].h-candles[i].l,Math.abs(candles[i].h-candles[i-1].c),Math.abs(candles[i].l-candles[i-1].c));atr.push((atr[i-1]*(period-1)+tr)/period);}
+}
+let upper=hl2.map((h,i)=>h+multiplier*atr[i]);
+let lower=hl2.map((h,i)=>h-multiplier*atr[i]);
+let trend="BUY";let superT=[];
+for(let i=0;i<candles.length;i++){
+if(i===0){superT.push(lower[i]);continue;}
+if(candles[i].c<=superT[i-1])trend="SELL";else if(candles[i].c>=superT[i-1])trend="BUY";
+superT.push(trend==="BUY"?lower[i]:upper[i]);
+}
+return{trend:trend};
+}
+function rsi(candles,p=14){
+if(candles.length<p+1)return 50;let g=0,l=0;
+for(let i=candles.length-p;i<candles.length;i++){let d=candles[i].c-candles[i-1].c;if(d>=0)g+=d;else l-=d;}
+if(l===0)return 100;let rs=g/l;return 100-(100/(1+rs));
+}
 function analyze(){
- let a1=[...m1C];if(cur1)a1.push(cur1);let a5=[...m5C];if(cur5)a5.push(cur5);
- if(a5.length<3){a5=[];for(let i=0;i<a1.length;i+=5){let s=a1.slice(i,i+5);if(s.length===5)a5.push({o:s[0].o,h:Math.max(...s.map(x=>x.h)),l:Math.min(...s.map(x=>x.l)),c:s[4].c,t:s[0].t});}}
- if(a1.length<20||a5.length<3)return;
- let s1=st(a1),s5=st(a5),r=rsi(a1,14);
- document.getElementById('m5').innerHTML='<span class="dot '+(s5.trend==="BUY"?'dot-buy':'dot-sell')+'"></span> '+s5.trend;
- document.getElementById('m1').innerHTML='<span class="dot '+(s1.trend==="BUY"?'dot-buy':'dot-sell')+'"></span> '+s1.trend;
- let rc=r>60?'rsi-high':r<40?'rsi-low':'rsi-mid';
- document.getElementById('rsi').innerHTML='<span class="'+rc+'">'+r.toFixed(1)+(r>60?' ▲ Strong':r<40?' ▼ Strong':' ~ Neutral 40-60')+'</span>';
- let sig="WAIT";
- if(s5.trend==="BUY"&&s1.trend==="BUY"&&r>60) sig="BUY";
- else if(s5.trend==="SELL"&&s1.trend==="SELL"&&r<40) sig="SELL";
- else if((s5.trend==="BUY"&&s1.trend==="BUY")||(s5.trend==="SELL"&&s1.trend==="SELL")) sig="WAIT_RSI";
- update(sig,r);
+let a1=[...m1C];if(cur1)a1.push(cur1);
+let a5=[...m5C];if(cur5)a5.push(cur5);
+if(a5.length<3){a5=[];for(let i=0;i<a1.length;i+=5){let s=a1.slice(i,i+5);if(s.length===5)a5.push({o:s[0].o,h:Math.max(...s.map(x=>x.h)),l:Math.min(...s.map(x=>x.l)),c:s[4].c,t:s[0].t});}}
+if(a1.length<15||a5.length<3)return;
+let s1=supertrend(a1,period,mult),s5=supertrend(a5,period,mult),r=rsi(a1,14);
+document.getElementById('m5Line').innerHTML='M5: <span class="dot '+(s5.trend==="BUY"?'dot-buy':'dot-sell')+'"></span> '+s5.trend;
+document.getElementById('m1Line').innerHTML='M1: <span class="dot '+(s1.trend==="BUY"?'dot-buy':'dot-sell')+'"></span> '+s1.trend;
+let rColor=r>60?'#00ff88':r<40?'#ff3b3b':'#ffcc00';
+document.getElementById('rsiLine').innerHTML='<span style="color:'+rColor+'">'+r.toFixed(1)+' ~ '+(r>60?'Bull':r<40?'Bear':'Neutral')+'</span>';
+let sig="WAIT";
+if(s5.trend==="BUY"&&s1.trend==="BUY")sig="BUY";
+else if(s5.trend==="SELL"&&s1.trend==="SELL")sig="SELL";
+if(sig==="BUY"&&r<40)sig="WAIT";
+if(sig==="SELL"&&r>60)sig="WAIT";
+let box=document.getElementById('signalBox'),ic=document.getElementById('sigIcon'),sb=document.getElementById('sigSub');
+if(sig==="BUY"){box.className="signal signal-buy";ic.textContent="🟢 GOLD BUY NOW";sb.textContent="M5 & M1 BUY - Go MT5 BUY (trend only)";}
+else if(sig==="SELL"){box.className="signal signal-sell";ic.textContent="🔴 GOLD SELL NOW";sb.textContent="M5 & M1 SELL - Go MT5 SELL (trend only)";}
+else{box.className="signal signal-wait";ic.textContent="🟡 WAIT";sb.textContent="M5 & M1 not aligned";}
 }
-function update(sig,r){
- let box=document.getElementById('sigBox'),ic=document.getElementById('sigIcon'),sb=document.getElementById('sigSub');
- if(sig==="BUY"){box.className="signal signal-buy";ic.textContent="🟢 V75 BUY NOW";sb.textContent="M5+M1 BUY + RSI "+r.toFixed(1)+" >60 Strong → BUY";}
- else if(sig==="SELL"){box.className="signal signal-sell";ic.textContent="🔴 V75 SELL NOW";sb.textContent="M5+M1 SELL + RSI "+r.toFixed(1)+" <40 Strong → SELL";}
- else if(sig==="WAIT_RSI"){box.className="signal signal-wait";ic.textContent="🟡 WAIT RSI "+r.toFixed(0);sb.textContent="Match but RSI "+r.toFixed(1)+" in 40-60 zone, need >60 or <40";}
- else{box.className="signal signal-wait";ic.textContent="🟡 WAIT";sb.textContent="M5 & M1 not aligned";}
-}
-function chg(d){mult=Math.max(1,Math.min(6,mult+d));document.getElementById('mult').textContent=mult.toFixed(1);if(m1C.length>20)analyze();}
-for(let i=0;i<35;i++){let f=470000+(Math.random()-0.5)*800;let t=Math.floor(Date.now()/1000)-(35-i)*60;m1C.push({o:f,h:f+30,l:f-30,c:f,t:t});}
-connectWS();
 </script>
 </body>
 </html>
