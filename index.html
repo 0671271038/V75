@@ -3,86 +3,89 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#090e1b">
+<meta name="theme-color" content="#f5f7fa">
 <title>WISETRADER V75 TREND PRO</title>
 
 <style>
 :root {
-  --bg:#090e1b;
-  --panel:#111a2c;
-  --panel2:#152139;
-  --line:#25334b;
-  --text:#edf3ff;
-  --muted:#91a0ba;
-  --green:#35d6a0;
-  --red:#ff647c;
-  --gold:#f2c66d;
-  --blue:#7aa7ff;
+  --bg:#f4f7fb;
+  --white:#ffffff;
+  --text:#172033;
+  --muted:#778196;
+  --line:#e6eaf0;
+  --green:#0eaf70;
+  --green-bg:#e5f9ef;
+  --red:#e54454;
+  --red-bg:#fff0f1;
+  --gold:#d99a18;
+  --gold-bg:#fff7df;
+  --blue:#4678ee;
+  --shadow:0 10px 35px #263b5b0d;
 }
 
 * { box-sizing:border-box; }
 
 body {
   margin:0;
-  background:radial-gradient(ellipse at 50% -10%,#1a2b4c 0%,var(--bg) 48%);
+  background:var(--bg);
   color:var(--text);
   font-family:Arial,Helvetica,sans-serif;
   min-height:100vh;
 }
 
-button { font:inherit;cursor:pointer; }
+button { font:inherit; cursor:pointer; }
 
 .app {
-  max-width:760px;
+  max-width:540px;
   margin:auto;
-  padding:16px 14px 34px;
+  padding:18px 15px 30px;
 }
 
-.topbar {
+header {
   display:flex;
   align-items:center;
   gap:12px;
-  padding:8px 2px 18px;
+  margin-bottom:22px;
 }
 
 .logo {
-  width:52px;
-  height:52px;
+  width:48px;
+  height:48px;
   object-fit:contain;
-  border-radius:15px;
+  border-radius:14px;
+  background:white;
 }
 
-.brand { flex:1;min-width:0; }
+.brand { flex:1; min-width:0; }
 
 .brand h1 {
   font-size:15px;
-  letter-spacing:1px;
-  margin:0;
   font-weight:900;
+  margin:0;
+  letter-spacing:.3px;
 }
+
+.brand h1 span { color:var(--blue); }
 
 .brand p {
+  margin:5px 0 0;
   font-size:10px;
   color:var(--muted);
-  margin:5px 0 0;
-  letter-spacing:.6px;
+  letter-spacing:1px;
 }
 
-.pill {
+.connection {
   display:flex;
   align-items:center;
-  gap:7px;
-  border:1px solid var(--line);
-  background:var(--panel);
-  border-radius:99px;
-  padding:8px 10px;
-  font-size:9px;
+  gap:6px;
+  font-size:10px;
   color:var(--muted);
+  white-space:nowrap;
 }
 
 .dot {
-  width:7px;
-  height:7px;
+  width:8px;
+  height:8px;
   border-radius:50%;
   background:var(--gold);
 }
@@ -90,348 +93,257 @@ button { font:inherit;cursor:pointer; }
 .dot.live { background:var(--green); }
 .dot.error { background:var(--red); }
 
-.hero {
-  border:1px solid #2c3b55;
-  background:linear-gradient(135deg,#172743,#111a2c 60%,#172039);
-  border-radius:23px;
-  padding:20px;
-  box-shadow:0 14px 36px #0004;
-}
-
-.eyebrow {
-  font-size:10px;
-  letter-spacing:1.5px;
-  text-transform:uppercase;
-  color:#a9bad5;
-  font-weight:800;
-}
-
-.signalrow {
+.market {
+  background:var(--white);
+  border:1px solid var(--line);
+  border-radius:20px;
+  padding:17px;
+  box-shadow:var(--shadow);
   display:flex;
   align-items:center;
   justify-content:space-between;
+  gap:10px;
+  margin-bottom:14px;
+}
+
+.market small {
+  color:var(--muted);
+  font-size:10px;
+  display:block;
+  margin-bottom:6px;
+}
+
+.market strong { font-size:16px; }
+
+.market-right { text-align:right; }
+
+.market-right strong {
+  font-size:12px;
+  color:var(--green);
+}
+
+.signal {
+  background:white;
+  border:1px solid var(--line);
+  border-radius:26px;
+  padding:25px 20px 21px;
+  text-align:center;
+  box-shadow:var(--shadow);
+  transition:background .25s,border-color .25s;
+}
+
+.signal.buy {
+  background:var(--green-bg);
+  border-color:#a5eac8;
+}
+
+.signal.sell {
+  background:var(--red-bg);
+  border-color:#ffc4ca;
+}
+
+.signal.wait {
+  background:var(--white);
+}
+
+.signal-label {
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:2px;
+  color:var(--muted);
+}
+
+.signal-word {
+  font-size:48px;
+  font-weight:1000;
+  letter-spacing:-2px;
+  margin:13px 0 9px;
+  line-height:1.1;
+}
+
+.signal-word.buy { color:var(--green); }
+.signal-word.sell { color:var(--red); }
+.signal-word.wait { color:var(--gold); }
+
+.signal-description {
+  font-size:12px;
+  line-height:1.6;
+  color:#596579;
+  max-width:310px;
+  margin:0 auto;
+}
+
+.signal-divider {
+  height:1px;
+  background:#17203312;
+  margin:22px 0 17px;
+}
+
+.signal-meta {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+.meta small {
+  display:block;
+  font-size:9px;
+  color:var(--muted);
+  margin-bottom:6px;
+  text-transform:uppercase;
+  letter-spacing:.6px;
+}
+
+.meta strong { font-size:13px; }
+
+.signal-icon {
+  width:54px;
+  height:54px;
+  margin:19px auto 0;
+  border-radius:18px;
+  background:#17203308;
+  display:grid;
+  place-items:center;
+  font-size:29px;
+}
+
+.buy .signal-icon { color:var(--green); background:#ffffff9c; }
+.sell .signal-icon { color:var(--red); background:#ffffff9c; }
+.wait .signal-icon { color:var(--gold); }
+
+.quick-grid {
+  display:grid;
+  grid-template-columns:1fr 1fr;
   gap:12px;
   margin-top:14px;
 }
 
-.signaltitle {
-  font-size:38px;
-  font-weight:900;
-  letter-spacing:-1px;
-}
-
-.signaltitle.wait { color:var(--gold); }
-.signaltitle.buy { color:var(--green); }
-.signaltitle.sell { color:var(--red); }
-
-.signaldesc {
-  font-size:12px;
-  color:#b7c4d9;
-  margin-top:6px;
-  line-height:1.5;
-}
-
-.scorebox {
-  min-width:95px;
-  text-align:center;
-  border:1px solid #ffffff18;
-  background:#07101f70;
-  border-radius:17px;
-  padding:13px 9px;
-}
-
-.score {
-  font-size:28px;
-  font-weight:900;
-}
-
-.score small {
-  font-size:11px;
-  color:var(--muted);
-}
-
-.scorelabel {
-  font-size:9px;
-  color:var(--muted);
-  text-transform:uppercase;
-  margin-top:5px;
-}
-
-.meter {
-  height:5px;
-  background:#29364d;
-  border-radius:99px;
-  margin-top:17px;
-  overflow:hidden;
-}
-
-.meterfill {
-  height:100%;
-  width:0;
-  background:linear-gradient(90deg,var(--gold),var(--green));
-  transition:width .3s;
-}
-
-.herobottom {
-  display:flex;
-  justify-content:space-between;
-  gap:8px;
-  margin-top:14px;
-  color:var(--muted);
-  font-size:9px;
-}
-
-.herobottom strong { color:var(--text); }
-
-.sectionhead {
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin:23px 2px 11px;
-  gap:8px;
-}
-
-.sectionhead h2 {
-  font-size:13px;
-  margin:0;
-}
-
-.sectionhead span {
-  font-size:10px;
-  color:var(--muted);
-}
-
-.grid {
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:10px;
-}
-
-.card {
-  background:linear-gradient(150deg,var(--panel),#0e1728);
+.quick-card {
   border:1px solid var(--line);
-  border-radius:16px;
-  padding:14px;
-  min-width:0;
+  background:white;
+  border-radius:17px;
+  padding:16px;
+  box-shadow:var(--shadow);
 }
 
-.cardtop {
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:5px;
-}
-
-.cardlabel {
-  font-size:10px;
-  color:var(--muted);
-  letter-spacing:.5px;
-  text-transform:uppercase;
-}
-
-.icon {
-  width:27px;
-  height:27px;
-  display:grid;
-  place-items:center;
-  border-radius:9px;
-  background:#ffffff08;
-  color:var(--blue);
-}
-
-.value {
-  font-size:17px;
-  font-weight:800;
-  margin-top:12px;
-  overflow:hidden;
-  text-overflow:ellipsis;
-}
-
-.sub {
-  font-size:10px;
-  color:var(--muted);
-  margin-top:5px;
-  line-height:1.5;
-}
-
-.status {
-  display:inline-flex;
-  font-size:9px;
-  font-weight:800;
-  padding:6px 8px;
-  border-radius:99px;
-  background:#ffffff0a;
-  color:var(--muted);
-  margin-top:10px;
-}
-
-.status.good {
-  color:var(--green);
-  background:#35d6a014;
-}
-
-.status.bad {
-  color:var(--red);
-  background:#ff647c14;
-}
-
-.status.neutral {
-  color:var(--gold);
-  background:#f2c66d12;
-}
-
-.reason {
-  display:flex;
-  gap:10px;
-  align-items:flex-start;
-  padding:13px 0;
-  border-bottom:1px solid #ffffff0b;
-}
-
-.reason:last-child { border-bottom:0; }
-
-.reasonicon {
-  width:27px;
-  height:27px;
-  border-radius:9px;
-  background:#ffffff08;
-  display:grid;
-  place-items:center;
-  flex-shrink:0;
-}
-
-.reasonbody { flex:1; }
-
-.reason strong { font-size:12px; }
-
-.reason p {
-  margin:4px 0 0;
+.quick-card small {
   color:var(--muted);
   font-size:10px;
-  line-height:1.5;
 }
 
-.check {
-  font-size:9px;
-  font-weight:800;
-  white-space:nowrap;
+.quick-card strong {
+  display:block;
+  font-size:16px;
+  margin-top:8px;
 }
+
+.trend-up { color:var(--green); }
+.trend-down { color:var(--red); }
+.trend-neutral { color:var(--gold); }
 
 .settings {
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
+  margin-top:18px;
+  border:1px solid var(--line);
+  background:white;
+  border-radius:18px;
+  padding:16px;
 }
 
-.setting {
+.settings-title {
+  font-size:12px;
+  font-weight:900;
+  margin-bottom:14px;
+}
+
+.setting-row {
   display:flex;
   justify-content:space-between;
   align-items:center;
-  gap:8px;
-  background:#0c1424;
-  border:1px solid #233149;
-  border-radius:12px;
-  padding:11px;
+  gap:10px;
+  padding:11px 0;
+  border-bottom:1px solid var(--line);
 }
 
-.setting span {
-  font-size:10px;
-  color:#a8b6cd;
+.setting-row:last-of-type { border-bottom:0; }
+
+.setting-row span {
+  font-size:12px;
+  color:#4e596d;
 }
 
 .toggle {
-  width:34px;
-  height:19px;
   border:0;
-  border-radius:99px;
-  background:#344158;
-  padding:2px;
+  border-radius:20px;
+  background:#d9dfe8;
+  width:39px;
+  height:23px;
+  padding:3px;
   flex-shrink:0;
 }
 
-.toggle:after {
+.toggle::after {
   content:"";
   display:block;
-  width:15px;
-  height:15px;
+  height:17px;
+  width:17px;
   border-radius:50%;
   background:white;
   transition:transform .2s;
 }
 
-.toggle.on { background:#238e70; }
-.toggle.on:after { transform:translateX(15px); }
+.toggle.on { background:var(--green); }
+.toggle.on::after { transform:translateX(16px); }
 
-.controls {
+.buttons {
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:10px;
-  margin-top:14px;
+  margin-top:15px;
 }
 
 .btn {
+  padding:12px 8px;
   border:1px solid var(--line);
-  background:#152139;
-  color:var(--text);
-  padding:12px 10px;
+  background:#f8fafc;
   border-radius:12px;
   font-size:11px;
   font-weight:800;
+  color:var(--text);
 }
 
 .btn.primary {
-  background:linear-gradient(135deg,#d9b45f,#f4d78c);
-  color:#171b25;
-  border:0;
+  background:var(--blue);
+  border-color:var(--blue);
+  color:white;
 }
-
-.connection {
-  display:flex;
-  justify-content:space-between;
-  gap:10px;
-  padding:12px;
-  border:1px solid var(--line);
-  border-radius:12px;
-  background:#0c1424;
-  margin-top:14px;
-  font-size:10px;
-  color:var(--muted);
-}
-
-.connection b { color:var(--text); }
 
 .notice {
   display:none;
-  padding:11px;
+  background:var(--gold-bg);
+  color:#805a10;
+  border:1px solid #f2d78e;
+  padding:12px;
   border-radius:12px;
-  background:#3b2d16;
-  border:1px solid #7a5b28;
-  color:#f3d79b;
   font-size:11px;
-  line-height:1.5;
+  line-height:1.6;
   margin-top:12px;
+  overflow-wrap:anywhere;
 }
 
 .footer {
   text-align:center;
-  color:#64738c;
-  font-size:9px;
-  line-height:1.7;
-  margin:22px 10px 0;
-}
-
-@media(min-width:600px) {
-  .app { padding:22px 22px 40px; }
-  .grid { grid-template-columns:repeat(3,minmax(0,1fr)); }
+  color:#9099a9;
+  font-size:10px;
+  line-height:1.8;
+  padding:21px 10px 0;
 }
 
 @media(max-width:360px) {
-  .app { padding:12px 9px 25px; }
-  .signaltitle { font-size:31px; }
-  .hero { padding:15px; }
-  .scorebox { min-width:80px; }
-  .settings { grid-template-columns:1fr; }
+  .app { padding:13px 10px 25px; }
   .brand h1 { font-size:12px; }
+  .logo { width:40px; height:40px; }
+  .signal-word { font-size:42px; }
+  .signal { padding:22px 14px 18px; }
 }
 </style>
 </head>
@@ -439,161 +351,99 @@ button { font:inherit;cursor:pointer; }
 <body>
 <div class="app">
 
-<header class="topbar">
-  <img class="logo" src="./lgo2.png" alt="Wisetrader logo"
+<header>
+  <img class="logo" src="./lgo2.png" alt="Wisetrader"
        onerror="this.style.visibility='hidden'">
 
   <div class="brand">
-    <h1>WISETRADER <span style="color:var(--gold)">V75 TREND PRO</span></h1>
-    <p>SMART TREND FOLLOWING · M1 + M5</p>
+    <h1>WISETRADER <span>V75 PRO</span></h1>
+    <p>INTELLIGENT TREND SIGNALS</p>
   </div>
 
-  <div class="pill">
-    <span id="liveDot" class="dot"></span>
-    <span id="liveText">CONNECTING</span>
+  <div class="connection">
+    <span class="dot" id="dot"></span>
+    <span id="connectionLabel">CONNECTING</span>
   </div>
 </header>
 
-<section class="hero">
-  <div class="eyebrow">Current market decision</div>
-
-  <div class="signalrow">
-    <div style="flex:1">
-      <div id="signalTitle" class="signaltitle wait">WAIT</div>
-      <div id="signalDesc" class="signaldesc">
-        Connecting to market data.
-      </div>
-    </div>
-
-    <div class="scorebox">
-      <div class="score"><span id="score">--</span><small>/100</small></div>
-      <div class="scorelabel">Setup strength</div>
-    </div>
+<section class="market">
+  <div>
+    <small>MARKET</small>
+    <strong>Volatility 75 (1s)</strong>
   </div>
-
-  <div class="meter"><div id="meterFill" class="meterfill"></div></div>
-
-  <div class="herobottom">
-    <span>MARKET <strong>V75 (1s)</strong></span>
-    <span>UPDATED <strong id="lastUpdate">Waiting…</strong></span>
+  <div class="market-right">
+    <small>MARKET DATA</small>
+    <strong id="dataStatus">Connecting…</strong>
   </div>
 </section>
 
-<div class="sectionhead">
-  <h2>Trend dashboard</h2>
-  <span>Closed candles only</span>
-</div>
+<section class="signal wait" id="signalPanel">
+  <div class="signal-label">CURRENT TRADING SIGNAL</div>
 
-<div class="grid">
+  <div class="signal-word wait" id="signalWord">WAIT</div>
 
-  <article class="card">
-    <div class="cardtop"><span class="cardlabel">M5 direction</span><span class="icon">↗</span></div>
-    <div id="m5Trend" class="value">Loading…</div>
-    <div class="sub">Higher-timeframe bias</div>
-    <span id="m5Badge" class="status neutral">Waiting</span>
-  </article>
+  <p class="signal-description" id="signalDescription">
+    Connecting to Deriv and preparing market analysis.
+  </p>
 
-  <article class="card">
-    <div class="cardtop"><span class="cardlabel">M1 entry trend</span><span class="icon">⌁</span></div>
-    <div id="m1Trend" class="value">Loading…</div>
-    <div class="sub">Entry timeframe</div>
-    <span id="m1Badge" class="status neutral">Waiting</span>
-  </article>
+  <div class="signal-icon" id="signalIcon">⌛</div>
 
-  <article class="card">
-    <div class="cardtop"><span class="cardlabel">RSI 14</span><span class="icon">◉</span></div>
-    <div id="rsiValue" class="value">--</div>
-    <div class="sub">Momentum confirmation</div>
-    <span id="rsiBadge" class="status neutral">Waiting</span>
-  </article>
+  <div class="signal-divider"></div>
 
-  <article class="card">
-    <div class="cardtop"><span class="cardlabel">EMA structure</span><span class="icon">≋</span></div>
-    <div id="emaValue" class="value">--</div>
-    <div class="sub">EMA 9 / 20 / 200</div>
-    <span id="emaBadge" class="status neutral">Waiting</span>
-  </article>
-
-  <article class="card">
-    <div class="cardtop"><span class="cardlabel">Trend strength</span><span class="icon">◈</span></div>
-    <div id="adxValue" class="value">--</div>
-    <div class="sub">ADX optional filter</div>
-    <span id="adxBadge" class="status neutral">Filter off</span>
-  </article>
-
-  <article class="card">
-    <div class="cardtop"><span class="cardlabel">Candle extension</span><span class="icon">↕</span></div>
-    <div id="atrValue" class="value">--</div>
-    <div class="sub">ATR spike protection</div>
-    <span id="atrBadge" class="status neutral">Waiting</span>
-  </article>
-
-</div>
-
-<div class="sectionhead">
-  <h2>Why this decision?</h2>
-  <span id="confirmCount">0 / 6 checks</span>
-</div>
-
-<section class="card" id="reasons">
-  <div class="reason">
-    <div class="reasonicon">◌</div>
-    <div class="reasonbody">
-      <strong>Waiting for market data</strong>
-      <p>Connect to Deriv public market data to calculate the strategy.</p>
+  <div class="signal-meta">
+    <div class="meta">
+      <small>Signal strength</small>
+      <strong id="signalStrength">--</strong>
+    </div>
+    <div class="meta">
+      <small>Last analysis</small>
+      <strong id="lastAnalysis">Waiting…</strong>
     </div>
   </div>
 </section>
 
-<div class="sectionhead">
-  <h2>App controls</h2>
-  <span>Signal preferences</span>
+<div class="quick-grid">
+  <div class="quick-card">
+    <small>MAIN TREND · M5</small>
+    <strong id="m5Display" class="trend-neutral">Loading…</strong>
+  </div>
+
+  <div class="quick-card">
+    <small>ENTRY TREND · M1</small>
+    <strong id="m1Display" class="trend-neutral">Loading…</strong>
+  </div>
 </div>
 
-<section class="card">
+<section class="settings">
+  <div class="settings-title">SIGNAL SETTINGS</div>
 
-  <div class="settings">
-
-    <div class="setting">
-      <span>Sound on new signal</span>
-      <button id="soundToggle" class="toggle on" aria-label="Toggle sound"></button>
-    </div>
-
-    <div class="setting">
-      <span>Browser notifications</span>
-      <button id="notifyToggle" class="toggle" aria-label="Toggle notifications"></button>
-    </div>
-
-    <div class="setting">
-      <span>ADX strength filter</span>
-      <button id="adxToggle" class="toggle" aria-label="Toggle ADX"></button>
-    </div>
-
-    <div class="setting">
-      <span>Strict pullback filter</span>
-      <button id="pullbackToggle" class="toggle on" aria-label="Toggle pullback"></button>
-    </div>
-
+  <div class="setting-row">
+    <span>Sound alerts</span>
+    <button class="toggle on" id="soundToggle" aria-label="Sound alerts"></button>
   </div>
 
-  <div class="controls">
-    <button id="reconnectBtn" class="btn primary">↻ Reconnect data</button>
-    <button id="testBtn" class="btn">♪ Test sound</button>
+  <div class="setting-row">
+    <span>Browser notifications</span>
+    <button class="toggle" id="notifyToggle" aria-label="Browser notifications"></button>
   </div>
 
-  <div id="notice" class="notice"></div>
+  <div class="setting-row">
+    <span>ADX trend-strength filter</span>
+    <button class="toggle" id="adxToggle" aria-label="ADX filter"></button>
+  </div>
 
+  <div class="buttons">
+    <button class="btn primary" id="reconnectBtn">↻ Reconnect</button>
+    <button class="btn" id="testSoundBtn">♪ Test sound</button>
+  </div>
+
+  <div class="notice" id="notice"></div>
 </section>
-
-<div class="connection">
-  <span>Data connection</span>
-  <b id="connectionText">Starting connection…</b>
-</div>
 
 <div class="footer">
   WISETRADER V75 TREND PRO<br>
-  Educational signal tool, not financial advice.<br>
-  Signals are not guarantees. Test on demo first.
+  Signals use completed candles. BUY/SELL signals are not guarantees.<br>
+  Test on a demo account before trading real money.
 </div>
 
 </div>
@@ -601,182 +451,180 @@ button { font:inherit;cursor:pointer; }
 <script>
 "use strict";
 
-/* =====================================================
+/* ===================================================
    WISETRADER V75 TREND PRO
-   SuperTrend 10/4.0 + EMA 9/20/200 + RSI 14
-   M5 trend confirmation + M1 entry analysis
-   ===================================================== */
+   M5 direction + M1 entry
+   SuperTrend 10/4.0, EMA 9/20/200, RSI 14
+   =================================================== */
 
-const CONFIG = {
+const CFG = {
   symbol: "1HZ75V",
-  websocket: "wss://api.derivws.com/trading/v1/options/ws/public",
-  supertrendPeriod: 10,
-  supertrendMultiplier: 4.0,
+  url: "wss://api.derivws.com/trading/v1/options/ws/public",
+  count: 500,
+  minHistory: 205,
+  stPeriod: 10,
+  stMultiplier: 4.0,
   rsiPeriod: 14,
-  emaFast: 9,
-  emaEntry: 20,
-  emaTrend: 200,
-  historyCount: 500,
-  refreshMs: 10000,
-  minimumScore: 60
+  minScore: 60,
+  refreshMs: 15000,
+  spikeATR: 1.8,
+  pullbackATR: 0.55,
+  rsiBuyMin: 50,
+  rsiBuyMax: 70,
+  rsiSellMin: 30,
+  rsiSellMax: 50
 };
 
 const $ = id => document.getElementById(id);
 
-let socket = null;
-let requestId = 1;
+let ws = null;
 let connected = false;
 let reconnectTimer = null;
 let refreshTimer = null;
-let lastDataTime = 0;
-let lastAlertKey = "";
-let lastSignal = "WAIT";
+let requestId = 1;
 let soundEnabled = true;
 let notificationsEnabled = false;
 let adxEnabled = false;
-let pullbackEnabled = true;
-let audioContext = null;
+let audioCtx = null;
+let lastAlertKey = "";
+let lastAnalyzedCandle = 0;
+let requestMap = new Map();
 
-const market = {
-  m1: [],
-  m5: []
-};
+const candles = { m1: [], m5: [] };
 
-function setConnection(message, state = "") {
-  $("connectionText").textContent = message;
-  $("liveText").textContent =
+function setConnection(text, state = "") {
+  $("connectionLabel").textContent =
     state === "live" ? "LIVE" :
     state === "error" ? "OFFLINE" : "CONNECTING";
 
-  $("liveDot").className =
+  $("dot").className =
     "dot " + (state === "live" ? "live" :
     state === "error" ? "error" : "");
+
+  $("dataStatus").textContent = text;
 }
 
-function showNotice(message) {
+function notice(text) {
   $("notice").style.display = "block";
-  $("notice").textContent = message;
+  $("notice").textContent = text;
 }
 
 function clearNotice() {
   $("notice").style.display = "none";
+  $("notice").textContent = "";
 }
 
-function setBadge(id, message, state = "neutral") {
-  $(id).textContent = message;
-  $(id).className = "status " + state;
+function request(payload, tf) {
+  if (!ws || ws.readyState !== WebSocket.OPEN) return;
+
+  const id = requestId++;
+  payload.req_id = id;
+  requestMap.set(id, tf);
+  ws.send(JSON.stringify(payload));
 }
 
-function sendRequest(payload) {
-  if (!socket || socket.readyState !== WebSocket.OPEN) return;
-
-  payload.req_id = requestId++;
-  socket.send(JSON.stringify(payload));
+function requestHistory(seconds, tf) {
+  request({
+    ticks_history: CFG.symbol,
+    adjust_start_time: 1,
+    count: CFG.count,
+    end: "latest",
+    granularity: seconds,
+    style: "candles"
+  }, tf);
 }
 
 function connect() {
   clearTimeout(reconnectTimer);
   clearInterval(refreshTimer);
+  requestMap.clear();
 
-  if (socket) {
-    socket.onclose = null;
-    try { socket.close(); } catch (e) {}
+  if (ws) {
+    ws.onclose = null;
+    try { ws.close(); } catch (_) {}
   }
 
   connected = false;
-  setConnection("Connecting to Deriv…");
-  clearNotice();
+  setConnection("Connecting…");
+  $("signalDescription").textContent =
+    "Connecting to Deriv market data.";
 
   try {
-    socket = new WebSocket(CONFIG.websocket);
-  } catch (error) {
-    setConnection("Could not connect", "error");
-    showNotice("Unable to open the market-data connection. Check your internet.");
+    ws = new WebSocket(CFG.url);
+  } catch (err) {
+    setConnection("Connection failed", "error");
+    notice("Could not open the market connection. Check your internet.");
     scheduleReconnect();
     return;
   }
 
-  socket.onopen = () => {
+  ws.onopen = () => {
     connected = true;
-    lastDataTime = Date.now();
+    clearNotice();
+    setConnection("Loading candles", "live");
 
-    setConnection("Connected · loading candles", "live");
-
-    requestCandles(60);
-    requestCandles(300);
+    requestHistory(60, "m1");
+    requestHistory(300, "m5");
 
     refreshTimer = setInterval(() => {
       if (connected) {
-        requestCandles(60);
-        requestCandles(300);
+        requestHistory(60, "m1");
+        requestHistory(300, "m5");
       }
-    }, CONFIG.refreshMs);
+    }, CFG.refreshMs);
   };
 
-  socket.onmessage = event => {
-    lastDataTime = Date.now();
-
+  ws.onmessage = event => {
     let data;
 
     try {
       data = JSON.parse(event.data);
-    } catch (error) {
+    } catch (_) {
       return;
     }
 
     if (data.error) {
-      setConnection("Market data error", "error");
-      showNotice(
-        "Deriv data error: " +
-        (data.error.message || "Unknown error") +
-        ". Check whether this public endpoint is supported."
-      );
+      setConnection("Data error", "error");
+      notice("Deriv says: " + (data.error.message || "Unknown error"));
       return;
     }
 
-    const granularity =
-      data.echo_req && Number(data.echo_req.granularity);
+    const tf =
+      requestMap.get(data.req_id) ||
+      Number(data.echo_req && data.echo_req.granularity) === 60 && "m1" ||
+      Number(data.echo_req && data.echo_req.granularity) === 300 && "m5";
 
-    const key =
-      granularity === 60 ? "m1" :
-      granularity === 300 ? "m5" : null;
-
-    if (!key) return;
+    if (!tf || !["m1", "m5"].includes(tf)) return;
 
     let raw = [];
 
-    if (data.msg_type === "candles" && data.candles) {
-      raw = data.candles;
-    } else if (data.history && data.history.candles) {
+    if (data.candles) raw = data.candles;
+    else if (data.history && data.history.candles) {
       raw = data.history.candles;
-    } else {
-      return;
     }
 
-    market[key] = raw.map(c => ({
+    if (!raw.length) return;
+
+    candles[tf] = raw.map(c => ({
       time: Number(c.epoch),
       open: Number(c.open),
       high: Number(c.high),
       low: Number(c.low),
       close: Number(c.close)
-    }))
-    .filter(c =>
+    })).filter(c =>
       Number.isFinite(c.time) &&
       Number.isFinite(c.open) &&
       Number.isFinite(c.high) &&
       Number.isFinite(c.low) &&
       Number.isFinite(c.close)
-    )
-    .sort((a, b) => a.time - b.time);
+    ).sort((a, b) => a.time - b.time);
 
-    analyze();
+    if (candles.m1.length && candles.m5.length) analyze();
   };
 
-  socket.onerror = () => {
-    setConnection("Connection error", "error");
-  };
+  ws.onerror = () => setConnection("Connection error", "error");
 
-  socket.onclose = () => {
+  ws.onclose = () => {
     connected = false;
     clearInterval(refreshTimer);
     setConnection("Disconnected", "error");
@@ -786,358 +634,306 @@ function connect() {
 
 function scheduleReconnect() {
   clearTimeout(reconnectTimer);
-
   reconnectTimer = setTimeout(() => {
     if (!document.hidden) connect();
   }, 5000);
 }
 
-function requestCandles(granularity) {
-  sendRequest({
-    ticks_history: CONFIG.symbol,
-    adjust_start_time: 1,
-    count: CONFIG.historyCount,
-    end: "latest",
-    granularity: granularity,
-    style: "candles"
-  });
-}
-
 /* ---------- Indicators ---------- */
 
-function calculateEMA(values, period) {
-  const output = Array(values.length).fill(null);
-
-  if (values.length < period) return output;
+function ema(values, period) {
+  const out = Array(values.length).fill(null);
+  if (values.length < period) return out;
 
   let sum = 0;
+  for (let i = 0; i < period; i++) sum += values[i];
 
-  for (let i = 0; i < period; i++) {
-    sum += values[i];
-  }
-
-  let previous = sum / period;
-  output[period - 1] = previous;
-
-  const multiplier = 2 / (period + 1);
+  let prev = sum / period;
+  out[period - 1] = prev;
+  const k = 2 / (period + 1);
 
   for (let i = period; i < values.length; i++) {
-    previous =
-      values[i] * multiplier +
-      previous * (1 - multiplier);
-
-    output[i] = previous;
+    prev = values[i] * k + prev * (1 - k);
+    out[i] = prev;
   }
 
-  return output;
+  return out;
 }
 
-function calculateRSI(values, period = 14) {
-  const output = Array(values.length).fill(null);
+function rsi(values, period = 14) {
+  const out = Array(values.length).fill(null);
+  if (values.length <= period) return out;
 
-  if (values.length <= period) return output;
-
-  let gains = 0;
-  let losses = 0;
+  let gain = 0, loss = 0;
 
   for (let i = 1; i <= period; i++) {
-    const change = values[i] - values[i - 1];
-
-    gains += Math.max(change, 0);
-    losses += Math.max(-change, 0);
+    const d = values[i] - values[i - 1];
+    gain += Math.max(d, 0);
+    loss += Math.max(-d, 0);
   }
 
-  let averageGain = gains / period;
-  let averageLoss = losses / period;
+  let ag = gain / period;
+  let al = loss / period;
 
-  output[period] = averageLoss === 0
-    ? 100
-    : 100 - 100 / (1 + averageGain / averageLoss);
+  out[period] = al === 0 ? 100 : 100 - 100 / (1 + ag / al);
 
   for (let i = period + 1; i < values.length; i++) {
-    const change = values[i] - values[i - 1];
-
-    averageGain =
-      (averageGain * (period - 1) + Math.max(change, 0)) / period;
-
-    averageLoss =
-      (averageLoss * (period - 1) + Math.max(-change, 0)) / period;
-
-    output[i] = averageLoss === 0
-      ? 100
-      : 100 - 100 / (1 + averageGain / averageLoss);
+    const d = values[i] - values[i - 1];
+    ag = (ag * (period - 1) + Math.max(d, 0)) / period;
+    al = (al * (period - 1) + Math.max(-d, 0)) / period;
+    out[i] = al === 0 ? 100 : 100 - 100 / (1 + ag / al);
   }
 
-  return output;
+  return out;
 }
 
-function calculateATR(candles, period = 14) {
-  if (!candles.length) return [];
-
-  const trueRanges = candles.map((c, i) => {
+function atr(cs, period = 14) {
+  const tr = cs.map((c, i) => {
     if (i === 0) return c.high - c.low;
-
-    const previousClose = candles[i - 1].close;
-
+    const pc = cs[i - 1].close;
     return Math.max(
       c.high - c.low,
-      Math.abs(c.high - previousClose),
-      Math.abs(c.low - previousClose)
+      Math.abs(c.high - pc),
+      Math.abs(c.low - pc)
     );
   });
 
-  // Wilder smoothing, rather than EMA smoothing.
-  const output = Array(candles.length).fill(null);
-
-  if (candles.length < period) return output;
+  const out = Array(cs.length).fill(null);
+  if (cs.length < period) return out;
 
   let value = 0;
-
-  for (let i = 0; i < period; i++) value += trueRanges[i];
-
+  for (let i = 0; i < period; i++) value += tr[i];
   value /= period;
-  output[period - 1] = value;
+  out[period - 1] = value;
 
-  for (let i = period; i < candles.length; i++) {
-    value = (value * (period - 1) + trueRanges[i]) / period;
-    output[i] = value;
+  for (let i = period; i < cs.length; i++) {
+    value = (value * (period - 1) + tr[i]) / period;
+    out[i] = value;
   }
 
-  return output;
+  return out;
 }
 
-function calculateSuperTrend(candles, period = 10, multiplier = 4.0) {
-  const n = candles.length;
-  const direction = Array(n).fill(0);
+function supertrend(cs, period = 10, mult = 4) {
+  const n = cs.length;
+  const dir = Array(n).fill(0);
   const line = Array(n).fill(null);
-
-  if (n < period + 2) return { direction, line };
-
-  const atr = calculateATR(candles, period);
-  const finalUpper = Array(n).fill(null);
-  const finalLower = Array(n).fill(null);
+  const a = atr(cs, period);
+  const upper = Array(n).fill(null);
+  const lower = Array(n).fill(null);
 
   for (let i = 0; i < n; i++) {
-    if (atr[i] == null) continue;
+    if (a[i] == null) continue;
 
-    const midpoint = (candles[i].high + candles[i].low) / 2;
-    const basicUpper = midpoint + multiplier * atr[i];
-    const basicLower = midpoint - multiplier * atr[i];
+    const mid = (cs[i].high + cs[i].low) / 2;
+    const bu = mid + mult * a[i];
+    const bl = mid - mult * a[i];
 
-    if (i === period - 1) {
-      finalUpper[i] = basicUpper;
-      finalLower[i] = basicLower;
-      direction[i] = 1;
-      line[i] = basicLower;
+    if (i === period - 1 || upper[i - 1] == null) {
+      upper[i] = bu;
+      lower[i] = bl;
+      dir[i] = 1;
+      line[i] = bl;
       continue;
     }
 
-    if (finalUpper[i - 1] == null || finalLower[i - 1] == null) {
-      finalUpper[i] = basicUpper;
-      finalLower[i] = basicLower;
-      direction[i] = 1;
-      line[i] = basicLower;
-      continue;
-    }
+    upper[i] = bu < upper[i - 1] ||
+      cs[i - 1].close > upper[i - 1] ? bu : upper[i - 1];
 
-    finalUpper[i] =
-      basicUpper < finalUpper[i - 1] ||
-      candles[i - 1].close > finalUpper[i - 1]
-        ? basicUpper : finalUpper[i - 1];
+    lower[i] = bl > lower[i - 1] ||
+      cs[i - 1].close < lower[i - 1] ? bl : lower[i - 1];
 
-    finalLower[i] =
-      basicLower > finalLower[i - 1] ||
-      candles[i - 1].close < finalLower[i - 1]
-        ? basicLower : finalLower[i - 1];
+    dir[i] = dir[i - 1] === -1
+      ? (cs[i].close > upper[i] ? 1 : -1)
+      : (cs[i].close < lower[i] ? -1 : 1);
 
-    if (direction[i - 1] === -1) {
-      direction[i] =
-        candles[i].close > finalUpper[i] ? 1 : -1;
-    } else {
-      direction[i] =
-        candles[i].close < finalLower[i] ? -1 : 1;
-    }
-
-    line[i] = direction[i] === 1
-      ? finalLower[i] : finalUpper[i];
+    line[i] = dir[i] === 1 ? lower[i] : upper[i];
   }
 
-  return { direction, line };
+  return { dir, line };
 }
 
-function calculateADX(candles, period = 14) {
-  if (candles.length < period * 2 + 2) return null;
+function adx(cs, period = 14) {
+  if (cs.length < period * 2 + 2) return null;
 
-  const tr = [];
-  const plusDM = [];
-  const minusDM = [];
+  const tr = [], plus = [], minus = [];
 
-  for (let i = 1; i < candles.length; i++) {
-    const current = candles[i];
-    const previous = candles[i - 1];
+  for (let i = 1; i < cs.length; i++) {
+    const c = cs[i], p = cs[i - 1];
 
     tr.push(Math.max(
-      current.high - current.low,
-      Math.abs(current.high - previous.close),
-      Math.abs(current.low - previous.close)
+      c.high - c.low,
+      Math.abs(c.high - p.close),
+      Math.abs(c.low - p.close)
     ));
 
-    const up = current.high - previous.high;
-    const down = previous.low - current.low;
+    const up = c.high - p.high;
+    const down = p.low - c.low;
 
-    plusDM.push(up > down && up > 0 ? up : 0);
-    minusDM.push(down > up && down > 0 ? down : 0);
+    plus.push(up > down && up > 0 ? up : 0);
+    minus.push(down > up && down > 0 ? down : 0);
   }
 
-  let smoothTR = 0;
-  let smoothPlus = 0;
-  let smoothMinus = 0;
+  let t = 0, p = 0, m = 0;
 
   for (let i = 0; i < period; i++) {
-    smoothTR += tr[i];
-    smoothPlus += plusDM[i];
-    smoothMinus += minusDM[i];
+    t += tr[i];
+    p += plus[i];
+    m += minus[i];
   }
 
   const dx = [];
 
   for (let i = period; i < tr.length; i++) {
     if (i > period) {
-      smoothTR = smoothTR - smoothTR / period + tr[i];
-      smoothPlus = smoothPlus - smoothPlus / period + plusDM[i];
-      smoothMinus = smoothMinus - smoothMinus / period + minusDM[i];
+      t = t - t / period + tr[i];
+      p = p - p / period + plus[i];
+      m = m - m / period + minus[i];
     }
 
-    const plusDI = 100 * smoothPlus / (smoothTR || 1);
-    const minusDI = 100 * smoothMinus / (smoothTR || 1);
+    const pdi = 100 * p / (t || 1);
+    const mdi = 100 * m / (t || 1);
 
-    dx.push(
-      100 * Math.abs(plusDI - minusDI) /
-      ((plusDI + minusDI) || 1)
-    );
+    dx.push(100 * Math.abs(pdi - mdi) / ((pdi + mdi) || 1));
   }
 
   if (dx.length < period) return null;
 
-  // Wilder-style ADX smoothing.
-  let adx = dx.slice(0, period).reduce((a, b) => a + b, 0) / period;
+  let value = dx.slice(0, period).reduce((a, b) => a + b, 0) / period;
 
   for (let i = period; i < dx.length; i++) {
-    adx = (adx * (period - 1) + dx[i]) / period;
+    value = (value * (period - 1) + dx[i]) / period;
   }
 
-  return adx;
+  return value;
 }
 
-/* ---------- Strategy ---------- */
+/* ---------- Signal logic ---------- */
 
 function analyze() {
   /*
-    Deriv candle responses can include the current forming candle.
-    Exclude the final returned candle to use completed candles only.
+    Use the last fully completed candle.
+    Ignore the newest candle returned by the history endpoint.
   */
 
-  const m1 = market.m1.slice(0, -1);
-  const m5 = market.m5.slice(0, -1);
+  const m1 = candles.m1.slice(0, -1);
+  const m5 = candles.m5.slice(0, -1);
 
-  if (m1.length < 205 || m5.length < 205) {
-    setConnection(
-      connected ? "Connected · loading history" : "Waiting for connection",
-      connected ? "live" : ""
-    );
+  if (m1.length < CFG.minHistory || m5.length < CFG.minHistory) {
+    setConnection("Loading history", connected ? "live" : "");
+    $("signalDescription").textContent =
+      "Loading enough completed candles to calculate the indicators.";
     return;
   }
-
-  const close1 = m1.map(c => c.close);
-  const close5 = m5.map(c => c.close);
 
   const i = m1.length - 1;
   const j = m5.length - 1;
 
-  const st1 = calculateSuperTrend(m1, 10, 4.0);
-  const st5 = calculateSuperTrend(m5, 10, 4.0);
+  if (i < 201 || j < 201) return;
 
-  const ema9 = calculateEMA(close1, 9);
-  const ema20 = calculateEMA(close1, 20);
-  const ema200 = calculateEMA(close1, 200);
+  const c1 = m1.map(c => c.close);
+  const c5 = m5.map(c => c.close);
 
-  const ema20M5 = calculateEMA(close5, 20);
-  const ema200M5 = calculateEMA(close5, 200);
+  const e9 = ema(c1, 9);
+  const e20 = ema(c1, 20);
+  const e200 = ema(c1, 200);
+  const e20_5 = ema(c5, 20);
+  const e200_5 = ema(c5, 200);
 
-  const rsi = calculateRSI(close1, 14);
-  const atr = calculateATR(m1, 14);
+  const r = rsi(c1, CFG.rsiPeriod);
+  const a = atr(m1, 14);
+  const st1 = supertrend(m1, CFG.stPeriod, CFG.stMultiplier);
+  const st5 = supertrend(m5, CFG.stPeriod, CFG.stMultiplier);
+  const adxValue = adx(m1, 14);
 
-  const current = m1[i];
-  const previous = m1[i - 1];
+  const c = m1[i];
+  const prev = m1[i - 1];
+  const atrNow = a[i] || 0;
 
-  const rsiNow = rsi[i];
-  const rsiPrevious = rsi[i - 1];
-  const atrNow = atr[i] || 0;
+  if (
+    e9[i] == null || e20[i] == null || e200[i] == null ||
+    e20_5[j] == null || e200_5[j] == null ||
+    r[i] == null || !atrNow
+  ) return;
 
-  const candleRange = current.high - current.low;
+  const m5Bull =
+    st5.dir[j] === 1 &&
+    c5[j] > e200_5[j] &&
+    e20_5[j] > e200_5[j];
 
-  const extended =
-    atrNow > 0 && candleRange > 1.8 * atrNow;
+  const m5Bear =
+    st5.dir[j] === -1 &&
+    c5[j] < e200_5[j] &&
+    e20_5[j] < e200_5[j];
 
-  const bullishCandle = current.close > current.open;
-  const bearishCandle = current.close < current.open;
+  const m1Bull =
+    st1.dir[i] === 1 &&
+    e9[i] > e20[i] &&
+    c.close > e200[i];
+
+  const m1Bear =
+    st1.dir[i] === -1 &&
+    e9[i] < e20[i] &&
+    c.close < e200[i];
+
+  const bullishCandle = c.close > c.open;
+  const bearishCandle = c.close < c.open;
+
+  const rsiBuy = r[i] > CFG.rsiBuyMin && r[i] < CFG.rsiBuyMax;
+  const rsiSell = r[i] > CFG.rsiSellMin && r[i] < CFG.rsiSellMax;
+
+  const range = c.high - c.low;
+  const spike = range > atrNow * CFG.spikeATR;
 
   const nearEMA =
-    Math.min(
-      Math.abs(current.close - ema9[i]),
-      Math.abs(current.close - ema20[i])
-    ) <= atrNow * 0.55;
+    Math.min(Math.abs(c.close - e9[i]), Math.abs(c.close - e20[i]))
+      <= atrNow * CFG.pullbackATR;
 
-  // Higher timeframe confirmation.
-  const bullishM5 =
-    st5.direction[j] === 1 &&
-    current.close > -Infinity &&
-    close5[j] > ema200M5[j] &&
-    ema20M5[j] > ema200M5[j];
+  /*
+    Entry can be:
+    1. Pullback near EMA 9/20 followed by a directional candle.
+    2. Momentum continuation with a directional candle and EMA alignment.
+    Continuation must not be an unusually large candle.
+  */
 
-  const bearishM5 =
-    st5.direction[j] === -1 &&
-    close5[j] < ema200M5[j] &&
-    ema20M5[j] < ema200M5[j];
+  const buyPullback = nearEMA && bullishCandle;
+  const sellPullback = nearEMA && bearishCandle;
 
-  // Entry timeframe confirmation.
-  const bullishM1 =
-    st1.direction[i] === 1 &&
-    ema9[i] > ema20[i] &&
-    close1[i] > ema200[i];
+  const buyContinuation =
+    bullishCandle &&
+    c.close > prev.close &&
+    e9[i] > e20[i] &&
+    c.close > e9[i] &&
+    range <= atrNow * 1.4;
 
-  const bearishM1 =
-    st1.direction[i] === -1 &&
-    ema9[i] < ema20[i] &&
-    close1[i] < ema200[i];
+  const sellContinuation =
+    bearishCandle &&
+    c.close < prev.close &&
+    e9[i] < e20[i] &&
+    c.close < e9[i] &&
+    range <= atrNow * 1.4;
 
-  const bullishRSI = rsiNow > 50 && rsiNow < 70;
-  const bearishRSI = rsiNow > 30 && rsiNow < 50;
+  const buyEntry = buyPullback || buyContinuation;
+  const sellEntry = sellPullback || sellContinuation;
 
-  const buyPullback =
-    !pullbackEnabled || (nearEMA && bullishCandle);
-
-  const sellPullback =
-    !pullbackEnabled || (nearEMA && bearishCandle);
-
-  const adx = calculateADX(m1, 14);
-  const adxPass = !adxEnabled || (adx !== null && adx >= 20);
+  const adxPass = !adxEnabled ||
+    (adxValue !== null && adxValue >= 20);
 
   const buyChecks = [
-    bullishM5,
-    bullishM1,
-    bullishRSI,
-    buyPullback,
-    !extended,
+    m5Bull,
+    m1Bull,
+    rsiBuy,
+    buyEntry,
+    !spike,
     adxPass
   ];
 
   const sellChecks = [
-    bearishM5,
-    bearishM1,
-    bearishRSI,
-    sellPullback,
-    !extended,
+    m5Bear,
+    m1Bear,
+    rsiSell,
+    sellEntry,
+    !spike,
     adxPass
   ];
 
@@ -1151,265 +947,118 @@ function analyze() {
 
   let signal = "WAIT";
   let score = Math.max(buyScore, sellScore);
-  let description = "Waiting for a clean M1 entry aligned with the M5 trend.";
+  let desc = "Waiting for M1 entry confirmation in the M5 trend.";
 
   if (
-    bullishM5 && bullishM1 && bullishRSI &&
-    buyPullback && !extended && adxPass &&
-    buyScore >= CONFIG.minimumScore
+    m5Bull && m1Bull && rsiBuy && buyEntry && !spike &&
+    adxPass && buyScore >= CFG.minScore
   ) {
     signal = "BUY";
     score = buyScore;
-    description = "Bullish trend aligned. M1 entry conditions confirmed.";
+    desc = buyPullback
+      ? "Bullish trend confirmed. Pullback entry detected."
+      : "Bullish trend confirmed. Momentum continuation detected.";
   } else if (
-    bearishM5 && bearishM1 && bearishRSI &&
-    sellPullback && !extended && adxPass &&
-    sellScore >= CONFIG.minimumScore
+    m5Bear && m1Bear && rsiSell && sellEntry && !spike &&
+    adxPass && sellScore >= CFG.minScore
   ) {
     signal = "SELL";
     score = sellScore;
-    description = "Bearish trend aligned. M1 entry conditions confirmed.";
-  } else if (extended) {
-    description = "WAIT: unusually large candle. Avoid chasing the move.";
+    desc = sellPullback
+      ? "Bearish trend confirmed. Pullback entry detected."
+      : "Bearish trend confirmed. Momentum continuation detected.";
+  } else if (spike) {
+    desc = "Large candle detected. Waiting to avoid chasing the move.";
   } else if (adxEnabled && !adxPass) {
-    description = "WAIT: ADX trend-strength filter has not passed.";
-  } else if (!bullishM5 && !bearishM5) {
-    description = "WAIT: M5 trend is not clearly aligned with EMA 200.";
-  } else if (
-    (bullishM5 && !bullishM1) ||
-    (bearishM5 && !bearishM1)
-  ) {
-    description = "WAIT: waiting for M1 trend alignment or a pullback.";
-  } else if (
-    (bullishM5 && !bullishRSI) ||
-    (bearishM5 && !bearishRSI)
-  ) {
-    description = "WAIT: RSI is outside the preferred momentum zone.";
+    desc = "Trend strength is below the selected ADX threshold.";
+  } else if (!m5Bull && !m5Bear) {
+    desc = "Waiting for a clear M5 trend.";
+  } else if ((m5Bull && !m1Bull) || (m5Bear && !m1Bear)) {
+    desc = "M5 trend identified. Waiting for M1 alignment.";
+  } else if ((m5Bull && !rsiBuy) || (m5Bear && !rsiSell)) {
+    desc = "Trend identified. Waiting for RSI momentum confirmation.";
+  } else if ((m5Bull && !buyEntry) || (m5Bear && !sellEntry)) {
+    desc = "Trend aligned. Waiting for an M1 entry candle.";
   }
 
-  render({
-    signal,
-    score,
-    description,
-    bullishM5,
-    bearishM5,
-    bullishM1,
-    bearishM1,
-    rsiNow,
-    ema9: ema9[i],
-    ema20: ema20[i],
-    ema200: ema200[i],
-    adx,
-    extended,
-    nearEMA,
-    bullishCandle,
-    bearishCandle,
-    current,
-    time: current.time
-  });
+  $("m5Display").textContent =
+    m5Bull ? "BULLISH ↑" : m5Bear ? "BEARISH ↓" : "MIXED";
 
-  setConnection("Live · completed candles", "live");
+  $("m5Display").className =
+    m5Bull ? "trend-up" : m5Bear ? "trend-down" : "trend-neutral";
+
+  $("m1Display").textContent =
+    m1Bull ? "BULLISH ↑" : m1Bear ? "BEARISH ↓" : "MIXED";
+
+  $("m1Display").className =
+    m1Bull ? "trend-up" : m1Bear ? "trend-down" : "trend-neutral";
+
+  renderSignal(signal, score, desc, c.time);
+
+  setConnection("Live · candles confirmed", "live");
 }
 
-/* ---------- Dashboard ---------- */
+function renderSignal(signal, score, desc, epoch) {
+  $("signalWord").textContent = signal;
+  $("signalWord").className = "signal-word " + signal.toLowerCase();
 
-function formatTime(epoch) {
-  if (!epoch) return "Waiting…";
+  $("signalPanel").className = "signal " + signal.toLowerCase();
 
-  return new Date(epoch * 1000).toLocaleTimeString([], {
-    hour:"2-digit",
-    minute:"2-digit",
-    second:"2-digit"
-  });
-}
+  $("signalDescription").textContent = desc;
+  $("signalStrength").textContent = score + " / 100";
 
-function render(data) {
-  const title = $("signalTitle");
+  $("signalIcon").textContent =
+    signal === "BUY" ? "↗" :
+    signal === "SELL" ? "↘" : "⌛";
 
-  title.textContent = data.signal;
-  title.className = "signaltitle " + data.signal.toLowerCase();
-
-  $("signalDesc").textContent = data.description;
-  $("score").textContent = data.score;
-  $("meterFill").style.width =
-    Math.max(0, Math.min(100, data.score)) + "%";
-
-  $("lastUpdate").textContent = formatTime(data.time);
-
-  $("m5Trend").textContent =
-    data.bullishM5 ? "BULLISH" :
-    data.bearishM5 ? "BEARISH" : "MIXED";
-
-  setBadge(
-    "m5Badge",
-    data.bullishM5 ? "Trend aligned ↑" :
-    data.bearishM5 ? "Trend aligned ↓" : "No clear bias",
-    data.bullishM5 || data.bearishM5 ? "good" : "neutral"
-  );
-
-  $("m1Trend").textContent =
-    data.bullishM1 ? "BULLISH" :
-    data.bearishM1 ? "BEARISH" : "MIXED";
-
-  setBadge(
-    "m1Badge",
-    data.bullishM1 ? "Entry trend ↑" :
-    data.bearishM1 ? "Entry trend ↓" : "Waiting for alignment",
-    data.bullishM1 || data.bearishM1 ? "good" : "neutral"
-  );
-
-  $("rsiValue").textContent =
-    data.rsiNow == null ? "--" : data.rsiNow.toFixed(1);
-
-  const rsiGood =
-    (data.bullishM5 && data.rsiNow > 50 && data.rsiNow < 70) ||
-    (data.bearishM5 && data.rsiNow > 30 && data.rsiNow < 50);
-
-  setBadge(
-    "rsiBadge",
-    rsiGood ? "Momentum supports trend" : "Momentum not confirmed",
-    rsiGood ? "good" : "neutral"
-  );
-
-  $("emaValue").textContent =
-    data.ema9 > data.ema20 ? "9 > 20" :
-    data.ema9 < data.ema20 ? "9 < 20" : "Flat";
-
-  const emaBull = data.ema9 > data.ema20 &&
-                  data.current.close > data.ema200;
-
-  const emaBear = data.ema9 < data.ema20 &&
-                  data.current.close < data.ema200;
-
-  setBadge(
-    "emaBadge",
-    emaBull ? "Bullish structure" :
-    emaBear ? "Bearish structure" : "Mixed structure",
-    emaBull || emaBear ? "good" : "neutral"
-  );
-
-  $("adxValue").textContent =
-    data.adx == null ? "Warming up" : data.adx.toFixed(1);
-
-  setBadge(
-    "adxBadge",
-    adxEnabled
-      ? (data.adx >= 20 ? "Strength OK" : "Below threshold")
-      : "Optional filter off",
-    adxEnabled
-      ? (data.adx >= 20 ? "good" : "bad")
-      : "neutral"
-  );
-
-  $("atrValue").textContent =
-    data.extended ? "Extended" : "Normal";
-
-  setBadge(
-    "atrBadge",
-    data.extended ? "Large candle — skip" : "No spike detected",
-    data.extended ? "bad" : "good"
-  );
-
-  const checks = [
-    {
-      name:"M5 direction",
-      pass:data.bullishM5 || data.bearishM5,
-      detail:"Higher timeframe must agree with SuperTrend and EMA 200."
-    },
-    {
-      name:"M1 trend structure",
-      pass:data.bullishM1 || data.bearishM1,
-      detail:"SuperTrend, EMA 9/20 and price vs EMA 200 must align."
-    },
-    {
-      name:"RSI momentum",
-      pass:rsiGood,
-      detail:"BUY: RSI 50–70. SELL: RSI 30–50."
-    },
-    {
-      name:"Pullback candle",
-      pass:data.nearEMA &&
-        ((data.bullishM5 && data.bullishCandle) ||
-         (data.bearishM5 && data.bearishCandle)),
-      detail:"Looks for a candle near EMA 9/20 in the trend direction."
-    },
-    {
-      name:"Spike protection",
-      pass:!data.extended,
-      detail:"Avoids entries after unusually large candles."
-    },
-    {
-      name:"ADX filter",
-      pass:!adxEnabled || (data.adx !== null && data.adx >= 20),
-      detail:"Optional filter requiring ADX of at least 20."
-    }
-  ];
-
-  $("confirmCount").textContent =
-    checks.filter(c => c.pass).length + " / " + checks.length + " checks";
-
-  $("reasons").innerHTML = checks.map(c => `
-    <div class="reason">
-      <div class="reasonicon">${c.pass ? "✓" : "·"}</div>
-      <div class="reasonbody">
-        <strong>${c.name}</strong>
-        <p>${c.detail}</p>
-      </div>
-      <span class="check" style="color:${c.pass ? "var(--green)" : "var(--muted)"}">
-        ${c.pass ? "PASS" : "WAIT"}
-      </span>
-    </div>
-  `).join("");
+  $("lastAnalysis").textContent = new Date(epoch * 1000)
+    .toLocaleTimeString([], { hour:"2-digit", minute:"2-digit" });
 
   /*
-    Alert only once for a new confirmed signal on a new completed
-    M1 candle. Do not repeatedly alert on every refresh.
+    Notify once for a signal on a new completed M1 candle.
+    Refreshes of the same candle cannot generate repeated alerts.
   */
 
-  const alertKey = data.time + "_" + data.signal;
+  const key = epoch + "_" + signal;
 
-  if (
-    data.signal !== "WAIT" &&
-    alertKey !== lastAlertKey
-  ) {
-    lastAlertKey = alertKey;
-    lastSignal = data.signal;
-    sendAlert(data.signal, data.score);
+  if (signal !== "WAIT" && key !== lastAlertKey) {
+    lastAlertKey = key;
+    sendAlert(signal, score);
   }
+
+  lastAnalyzedCandle = epoch;
 }
 
-/* ---------- Alerts ---------- */
+/* ---------- Sound and notifications ---------- */
 
 function playSound() {
   try {
-    audioContext = audioContext ||
+    audioCtx = audioCtx ||
       new (window.AudioContext || window.webkitAudioContext)();
 
-    if (audioContext.state === "suspended") {
-      audioContext.resume();
-    }
+    if (audioCtx.state === "suspended") audioCtx.resume();
 
-    const oscillator = audioContext.createOscillator();
-    const gain = audioContext.createGain();
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
 
-    oscillator.type = "sine";
-    oscillator.frequency.value = 880;
+    osc.type = "sine";
+    osc.frequency.value = 880;
 
-    gain.gain.setValueAtTime(0.001, audioContext.currentTime);
+    gain.gain.setValueAtTime(0.001, audioCtx.currentTime);
     gain.gain.exponentialRampToValueAtTime(
-      0.12, audioContext.currentTime + 0.03
+      0.13, audioCtx.currentTime + 0.03
     );
     gain.gain.exponentialRampToValueAtTime(
-      0.001, audioContext.currentTime + 0.28
+      0.001, audioCtx.currentTime + 0.3
     );
 
-    oscillator.connect(gain);
-    gain.connect(audioContext.destination);
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
 
-    oscillator.start();
-    oscillator.stop(audioContext.currentTime + 0.3);
-  } catch (error) {
-    showNotice("Sound unavailable. Tap Test sound and check phone volume.");
+    osc.start();
+    osc.stop(audioCtx.currentTime + 0.31);
+  } catch (_) {
+    notice("Sound unavailable. Check your phone volume and browser settings.");
   }
 }
 
@@ -1421,15 +1070,16 @@ function sendAlert(signal, score) {
     "Notification" in window &&
     Notification.permission === "granted"
   ) {
-    new Notification("WISETRADER V75 TREND PRO", {
-      body:signal + " setup confirmed · Strength " + score + "/100"
-    });
+    try {
+      new Notification("WISETRADER V75 PRO", {
+        body: signal + " signal · Strength " + score + "/100"
+      });
+    } catch (_) {}
   }
 }
 
-function setupToggle(id, initial, callback) {
+function toggle(id, initial, callback) {
   let state = initial;
-
   $(id).classList.toggle("on", state);
 
   $(id).addEventListener("click", () => {
@@ -1439,11 +1089,9 @@ function setupToggle(id, initial, callback) {
   });
 }
 
-setupToggle("soundToggle", true, value => {
-  soundEnabled = value;
-});
+toggle("soundToggle", true, value => soundEnabled = value);
 
-setupToggle("notifyToggle", false, async value => {
+toggle("notifyToggle", false, async value => {
   if (!value) {
     notificationsEnabled = false;
     return;
@@ -1452,51 +1100,41 @@ setupToggle("notifyToggle", false, async value => {
   if (!("Notification" in window)) {
     notificationsEnabled = false;
     $("notifyToggle").classList.remove("on");
-    showNotice("This browser does not support notifications.");
+    notice("Notifications are not supported in this browser.");
     return;
   }
 
   const permission = await Notification.requestPermission();
-
   notificationsEnabled = permission === "granted";
-
   $("notifyToggle").classList.toggle("on", notificationsEnabled);
 
   if (!notificationsEnabled) {
-    showNotice(
-      "Notifications were not enabled. Check your browser and Android permissions."
-    );
+    notice("Allow notifications in your browser or Android app settings.");
   } else {
     clearNotice();
   }
 });
 
-setupToggle("adxToggle", false, value => {
+toggle("adxToggle", false, value => {
   adxEnabled = value;
-  analyze();
-});
-
-setupToggle("pullbackToggle", true, value => {
-  pullbackEnabled = value;
   analyze();
 });
 
 $("reconnectBtn").addEventListener("click", connect);
 
-$("testBtn").addEventListener("click", () => {
+$("testSoundBtn").addEventListener("click", () => {
   playSound();
-  showNotice("Test sound requested. Check your phone media volume if silent.");
+  notice("Test sound requested. Check your phone media volume.");
 });
 
 document.addEventListener("visibilitychange", () => {
   if (!document.hidden &&
-      (!socket || socket.readyState !== WebSocket.OPEN)) {
+      (!ws || ws.readyState !== WebSocket.OPEN)) {
     connect();
   }
 });
 
 connect();
-
 </script>
 </body>
   </html>
